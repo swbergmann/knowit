@@ -35,3 +35,9 @@ git commit -m "initial commit"
 git remote add origin git@github.com:username/reponame.git  
 git branch -M main  
 git push -u origin main  
+
+## Install AsyncStorage ##
+https://docs.expo.dev/versions/latest/sdk/async-storage/  
+
+npx expo install @react-native-async-storage/async-storage  
+
