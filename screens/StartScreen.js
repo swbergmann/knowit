@@ -24,10 +24,8 @@ function StartScreen({onStore, onGetName}) {
     let errors = {};
 
     if (!userInput) { // validate name field
-      console.log('Name is required.');
       errors.name = 'Name is required.';
     } else if (userInput.length < 3) {
-      console.log('Name must be at least 3 characters.');
       errors.name = 'Name must be at least 3 characters.';
     } else if (userInput.length > 12) {
       errors.name = 'Maximum length is 12 characters.';

@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 import Colors from '../constants/colors';
 
@@ -16,7 +17,8 @@ function PlayerScreen({onRemove, onGetName}) {
           style={styles.button}
           onPress={eraseHandler}
       >
-          <Text style={styles.white}>Erase my name!</Text>
+        <SimpleLineIcons name='logout' color='white'/>
+        <Text style={styles.white}>Erase my name!</Text>
       </Pressable>
     </View>
   );
