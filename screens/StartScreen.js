@@ -1,19 +1,45 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, Pressable } from 'react-native';
 
+import Colors from '../constants/colors';
+
 // use object-destructuring to automatically pull out these props from the incoming props object
 function StartScreen({onStore, onGetName}) {
-  const [userInput, setUserInput] = useState();
+  const [userInput, setUserInput] = useState('');
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
 
   function inputChangeHandler(text) {
-    console.log(text);
     setUserInput(text);
   }
 
   function pressHandler() {
-    onStore(userInput);
-    onGetName(); // update storedName to switch screens
+    if (isFormValid) { // only store input if form is validated
+      onStore(userInput);
+      onGetName(); // update storedName to switch screens
+    }
   }
+
+  const validateForm = () => {
+    let errors = {};
+
+    if (!userInput) { // validate name field
+      console.log('Name is required.');
+      errors.name = 'Name is required.';
+    } else if (userInput.length < 3) {
+      console.log('Name must be at least 3 characters.');
+      errors.name = 'Name must be at least 3 characters.';
+    } else if (userInput.length > 12) {
+      errors.name = 'Maximum length is 12 characters.';
+    }
+
+    setErrors(errors);
+    setIsFormValid(Object.keys(errors).length === 0); // form is only valid if 0 errors occur
+  }
+
+  useEffect(() => {
+    validateForm(); // validate form on every user input
+  }, [userInput]);
 
   return (
     <View style={styles.container}>
@@ -24,13 +50,19 @@ function StartScreen({onStore, onGetName}) {
       />
 
       <Text style={styles.knowit}>to Know It?!</Text>
-      {/* <Text style={styles.title}>the quizzing app</Text> */}
       
       <TextInput 
         style={styles.input}
         placeholder='Please enter your name'
         onChangeText={inputChangeHandler}
       />
+
+      {/* show errors only when they exist */}
+      {Object.values(errors).map((error, index) => (
+        <Text key={index} style={styles.error}>
+          {error}
+        </Text>
+      ))}
 
       <Pressable 
         style={styles.button}
@@ -63,7 +95,7 @@ const styles = StyleSheet.create({
     },
     input: {
       borderWidth: 1,
-      borderColor: '#575DD9',
+      borderColor: Colors.primary300,
       alignSelf: 'stretch',
       margin: 32,
       height: 64,
@@ -72,7 +104,7 @@ const styles = StyleSheet.create({
       fontSize: 24
     },
     button: {
-      backgroundColor: '#575DD9',
+      backgroundColor: Colors.primary300,
       alignItems: 'center',
       justifyContent: 'center',
       alignSelf: 'stretch',
@@ -85,5 +117,9 @@ const styles = StyleSheet.create({
     white: {
       color: 'white',
       fontSize: 18
+    },
+    error: {
+      color: 'red',
+      fontSize: 20
     }
 });

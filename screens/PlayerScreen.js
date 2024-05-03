@@ -1,5 +1,7 @@
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 
+import Colors from '../constants/colors';
+
 function PlayerScreen({onRemove, onGetName}) {
   function eraseHandler() {
     onRemove();
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
     },
     input: {
       borderWidth: 1,
-      borderColor: '#575DD9',
+      borderColor: Colors.primary300,
       alignSelf: 'stretch',
       margin: 32,
       height: 64,
@@ -48,7 +50,7 @@ const styles = StyleSheet.create({
       fontSize: 24
     },
     button: {
-      backgroundColor: '#575DD9',
+      backgroundColor: Colors.primary300,
       alignItems: 'center',
       justifyContent: 'center',
       alignSelf: 'stretch',
