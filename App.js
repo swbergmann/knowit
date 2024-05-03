@@ -7,14 +7,13 @@ import StartScreen from './screens/StartScreen';
 import PlayerScreen from './screens/PlayerScreen';
 
 export default function App() {
-  const [name, setName] = useState();
+  const [userInput, setUserInput] = useState();
   const [storedName, setStoredName] = useState();
 
   const storeName = async () => {
     try {
-      await AsyncStorage.setItem('name', name);
+      await AsyncStorage.setItem('name', userInput);
     } catch (e) {
-      console.log('saving error');
       console.log(e);
     }
   };
@@ -22,16 +21,8 @@ export default function App() {
   const getName = async () => {
     try {
       let name = await AsyncStorage.getItem('name');
-      if (name !== null) {
-        //setName(name);
-        setStoredName(name);
-      } else {
-        console.log("name was undefined.");
-        // if name was 'undefined', update storedName to reload the screens
-        setStoredName(name);
-      }
+      setStoredName(name); // based on this value, the correct screen is rendered
     } catch (e) {
-      console.log('reading error');
       console.log(e);
     }
   };
@@ -40,37 +31,34 @@ export default function App() {
     try {
       await AsyncStorage.removeItem('name');
     } catch (e) {
-      console.log('removing error');
+      console.log(e);
     }
   };
 
-  function onEraseHandler() {
+  function eraseHandler() {
     removeName();
-
-    // update the state of storedName to switch screens
-    getName();
+    getName(); // update storedName to switch screens
   }
 
   function inputChangeHandler(text) {
     console.log(text);
-    setName(text);
+    setUserInput(text);
   }
 
-  function onPressHandler() {
+  function pressHandler() {
     storeName();
-
-    // update the state of storedName to switch screens
-    getName();
+    getName(); // update storedName to switch screens
   }
 
   useEffect(() => {
     getName();
   }, []);
 
-  let screen = <StartScreen onInputChange={inputChangeHandler} onPress={onPressHandler} name={name} />;
+  // use props to pass pointers to these functions to the component
+  let screen = <StartScreen onInputChange={inputChangeHandler} onPress={pressHandler} name={userInput} />;
 
   if (storedName) {
-    screen = <PlayerScreen onPress={onEraseHandler} />;
+    screen = <PlayerScreen onPress={eraseHandler} />;
   }
 
   return (

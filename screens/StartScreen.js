@@ -1,5 +1,6 @@
 import { StyleSheet, Text, TextInput, View, Image, Pressable } from 'react-native';
 
+// use object-destructuring to automatically pull out these props from the incoming props object
 function StartScreen({onInputChange, onPress}) {
     return (
         <View style={styles.container}>
