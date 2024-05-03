@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, View, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Image, Pressable, Keyboard, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback, Platform } from 'react-native';
 
 import Colors from '../constants/colors';
 
@@ -10,7 +10,7 @@ function StartScreen({onStore, onGetName}) {
   const [isFormValid, setIsFormValid] = useState(false);
 
   function inputChangeHandler(text) {
-    setUserInput(text);
+    setUserInput(text.trim()); // remove white-spaces
   }
 
   function pressHandler() {
@@ -40,35 +40,44 @@ function StartScreen({onStore, onGetName}) {
   }, [userInput]);
 
   return (
-    <View style={styles.container}>
-      <Image 
-        source={require('../assets/undraw/welcome_cats.png')}
-        style={styles.welcomeImage}
-        resizeMode='contain'
-      />
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}>
+      <SafeAreaView style={styles.container}>
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.inner}>
+            <Image 
+              source={require('../assets/undraw/welcome_cats.png')}
+              style={styles.welcomeImage}
+              resizeMode='contain'
+            />
 
-      <Text style={styles.knowit}>to Know It?!</Text>
-      
-      <TextInput 
-        style={styles.input}
-        placeholder='Please enter your name'
-        onChangeText={inputChangeHandler}
-      />
+            <Text style={styles.knowit}>to Know It?!</Text>
+            
+            <TextInput 
+              style={styles.input}
+              placeholder='Enter your name'
+              onChangeText={inputChangeHandler}
+            />
 
-      {/* show errors only when they exist */}
-      {Object.values(errors).map((error, index) => (
-        <Text key={index} style={styles.error}>
-          {error}
-        </Text>
-      ))}
+            {/* show errors only when they exist */}
+            {Object.values(errors).map((error, index) => (
+              <Text key={index} style={styles.error}>
+                {error}
+              </Text>
+            ))}
 
-      <Pressable 
-        style={styles.button}
-        onPress={pressHandler}
-      >
-        <Text style={styles.white}>Save my name!</Text>
-      </Pressable>    
-    </View>
+            <Pressable 
+              style={styles.button}
+              onPress={pressHandler}
+            >
+              <Text style={styles.white}>Save my name!</Text>
+            </Pressable>
+            <View style={styles.empty}></View>
+          </View>
+        </TouchableWithoutFeedback>
+      </SafeAreaView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -76,26 +85,31 @@ export default StartScreen;
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center'
+      flex: 1
+    },
+    inner: {
+      flex: 1,
+      padding: 24,
+      justifyContent: 'flex-end',
+      alignItems: 'center'
+    },
+    empty: {
+      flex: 1
     },
     welcomeImage: {
       width: '100%',
       height: 210,
-      marginTop: 70
+      marginTop: 60
     },
     knowit: {
       fontSize: 36
-    },
-    title: {
-      fontSize: 28
     },
     input: {
       borderWidth: 1,
       borderColor: Colors.primary300,
       alignSelf: 'stretch',
-      margin: 32,
+      marginVertical: 36,
+      marginHorizontal: 24,
       height: 64,
       borderRadius: 6,
       paddingHorizontal: 16,
@@ -108,8 +122,9 @@ const styles = StyleSheet.create({
       alignSelf: 'stretch',
       paddingVertical: 12,
       paddingHorizontal: 32,
-      marginTop: 32,
       marginHorizontal: 32,
+      marginVertical: 12,
+      marginTop: 45,
       borderRadius: 6
     },
     white: {

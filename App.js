@@ -34,7 +34,7 @@ export default function App() {
   let screen = <StartScreen onStore={storeName} onGetName={getName} />;
 
   if (storedName) {
-    screen = <PlayerScreen onRemove={removeName} onGetName={getName} />;
+    screen = <PlayerScreen onRemove={removeName} onGetName={getName} storedName={storedName}/>;
   }
 
   return (
