@@ -7,64 +7,40 @@ import StartScreen from './screens/StartScreen';
 import PlayerScreen from './screens/PlayerScreen';
 
 export default function App() {
-  const [userInput, setUserInput] = useState();
   const [storedName, setStoredName] = useState();
 
-  const storeName = async () => {
+  const storeName = async (userInput) => {
     try {
       await AsyncStorage.setItem('name', userInput);
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {console.log(e);}
   };
 
   const getName = async () => {
     try {
       let name = await AsyncStorage.getItem('name');
       setStoredName(name); // based on this value, the correct screen is rendered
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {console.log(e);}
   };
 
   const removeName = async () => {
     try {
       await AsyncStorage.removeItem('name');
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {console.log(e);}
   };
 
-  function eraseHandler() {
-    removeName();
-    getName(); // update storedName to switch screens
-  }
-
-  function inputChangeHandler(text) {
-    console.log(text);
-    setUserInput(text);
-  }
-
-  function pressHandler() {
-    storeName();
-    getName(); // update storedName to switch screens
-  }
-
-  useEffect(() => {
-    getName();
-  }, []);
+  useEffect(() => {getName();}, []); // query the name from async storage only on the first loading of the page
 
   // use props to pass pointers to these functions to the component
-  let screen = <StartScreen onInputChange={inputChangeHandler} onPress={pressHandler} name={userInput} />;
+  let screen = <StartScreen onStore={storeName} onGetName={getName} />;
 
   if (storedName) {
-    screen = <PlayerScreen onPress={eraseHandler} />;
+    screen = <PlayerScreen onRemove={removeName} onGetName={getName} />;
   }
 
   return (
     <>
-      {screen}
       <StatusBar style='auto' />
+      {screen}
     </>
   );
 }

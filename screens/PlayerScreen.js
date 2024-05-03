@@ -1,18 +1,23 @@
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 
-function PlayerScreen({onPress}) {
-    return (
-        <View>
-            <Text>On PlayerScreen now.</Text>
+function PlayerScreen({onRemove, onGetName}) {
+  function eraseHandler() {
+    onRemove();
+    onGetName(); // update storedName to switch screens
+    // setUserInput("");
+  }
+  return (
+    <View>
+      <Text>On PlayerScreen now.</Text>
 
-            <Pressable 
-                style={styles.button}
-                onPress={onPress}
-            >
-                <Text style={styles.white}>Erase my name!</Text>
-            </Pressable>
-        </View>
-    );
+      <Pressable 
+          style={styles.button}
+          onPress={eraseHandler}
+      >
+          <Text style={styles.white}>Erase my name!</Text>
+      </Pressable>
+    </View>
+  );
 }
 
 export default PlayerScreen;

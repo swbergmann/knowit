@@ -1,30 +1,45 @@
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, Pressable } from 'react-native';
 
 // use object-destructuring to automatically pull out these props from the incoming props object
-function StartScreen({onInputChange, onPress}) {
-    return (
-        <View style={styles.container}>
-          <Image 
-            source={require('../assets/undraw/welcome_cats.png')}
-            style={styles.welcomeImage}
-            resizeMode='contain'
-          />
+function StartScreen({onStore, onGetName}) {
+  const [userInput, setUserInput] = useState();
 
-          <Text style={styles.question}>What's your name?</Text>
-          
-          <TextInput 
-            style={styles.input}
-            onChangeText={onInputChange}
-          />
-    
-          <Pressable 
-            style={styles.button}
-            onPress={onPress}
-          >
-            <Text style={styles.white}>Save my name!</Text>
-          </Pressable>    
-        </View>
-    );
+  function inputChangeHandler(text) {
+    console.log(text);
+    setUserInput(text);
+  }
+
+  function pressHandler() {
+    onStore(userInput);
+    onGetName(); // update storedName to switch screens
+  }
+
+  return (
+    <View style={styles.container}>
+      <Image 
+        source={require('../assets/undraw/welcome_cats.png')}
+        style={styles.welcomeImage}
+        resizeMode='contain'
+      />
+
+      <Text style={styles.knowit}>to Know It?!</Text>
+      {/* <Text style={styles.title}>the quizzing app</Text> */}
+      
+      <TextInput 
+        style={styles.input}
+        placeholder='Please enter your name'
+        onChangeText={inputChangeHandler}
+      />
+
+      <Pressable 
+        style={styles.button}
+        onPress={pressHandler}
+      >
+        <Text style={styles.white}>Save my name!</Text>
+      </Pressable>    
+    </View>
+  );
 }
 
 export default StartScreen;
@@ -40,9 +55,11 @@ const styles = StyleSheet.create({
       height: 210,
       marginTop: 70
     },
-    question: {
-      fontSize: 24,
-      fontWeight: '300'
+    knowit: {
+      fontSize: 36
+    },
+    title: {
+      fontSize: 28
     },
     input: {
       borderWidth: 1,
