@@ -43,7 +43,7 @@ function StartScreen({onStore, onGetName}) {
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.safe}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
             <Image 
@@ -85,21 +85,28 @@ export default StartScreen;
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1
+      flex: 1,
+      backgroundColor: Colors.primary600
+    },
+    safe: {
+      flex: 1,
+      marginTop: 60
     },
     inner: {
       flex: 1,
-      padding: 24,
+      margin: 20,
+      borderRadius: 8,
+      overflow: 'hidden',
       justifyContent: 'flex-end',
-      alignItems: 'center'
+      alignItems: 'center',
+      backgroundColor: 'gray'
     },
     empty: {
       flex: 1
     },
     welcomeImage: {
       width: '100%',
-      height: 210,
-      marginTop: 60
+      height: 210
     },
     knowit: {
       fontSize: 36
