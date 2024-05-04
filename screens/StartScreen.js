@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, View, Image, Pressable, Keyboard, KeyboardAvoidingView, SafeAreaView, TouchableWithoutFeedback, Platform } from 'react-native';
+import { SimpleLineIcons } from "@expo/vector-icons";
 
 import Colors from '../constants/colors';
 
@@ -46,33 +47,43 @@ function StartScreen({onStore, onGetName}) {
       <SafeAreaView style={styles.safe}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
-            <Image 
-              source={require('../assets/undraw/welcome_cats.png')}
-              style={styles.welcomeImage}
-              resizeMode='contain'
-            />
+            <View style={styles.visible}>
+              <View style={styles.upper}>
+                <Image 
+                  source={require('../assets/undraw/welcome_cats.png')}
+                  style={styles.welcomeImage}
+                  resizeMode='contain'
+                />
 
-            <Text style={styles.knowit}>to Know It?!</Text>
-            
-            <TextInput 
-              style={styles.input}
-              placeholder='Enter your name'
-              onChangeText={inputChangeHandler}
-            />
+                <Text style={styles.knowit}>Know It?!</Text>
+              </View>
+              <View style={styles.lower}>
+                <Text style={styles.description}>Enter your name</Text>
 
-            {/* show errors only when they exist */}
-            {Object.values(errors).map((error, index) => (
-              <Text key={index} style={styles.error}>
-                {error}
-              </Text>
-            ))}
+                <View style={styles.inputLine}>
+                  <SimpleLineIcons name='graduation' color='black' style={styles.icon}/>
+                  <TextInput 
+                    style={styles.input}
+                    placeholder='Name'
+                    onChangeText={inputChangeHandler}
+                    />
+                </View>
 
-            <Pressable 
-              style={styles.button}
-              onPress={pressHandler}
-            >
-              <Text style={styles.white}>Save my name!</Text>
-            </Pressable>
+                {/* show errors only when they exist */}
+                {Object.values(errors).map((error, index) => (
+                  <Text key={index} style={styles.error}>
+                    {error}
+                  </Text>
+                ))}
+
+                <Pressable 
+                  style={styles.button}
+                  onPress={pressHandler}
+                >
+                  <Text style={styles.white}>Login</Text>
+                </Pressable>
+              </View>
+            </View>
             <View style={styles.empty}></View>
           </View>
         </TouchableWithoutFeedback>
@@ -90,16 +101,30 @@ const styles = StyleSheet.create({
     },
     safe: {
       flex: 1,
-      marginTop: 60
+      marginTop: 90
     },
     inner: {
       flex: 1,
       margin: 20,
-      borderRadius: 8,
       overflow: 'hidden',
       justifyContent: 'flex-end',
+      borderRadius: 8
+    },
+    visible: {
+      overflow: 'hidden',
+      borderRadius: 8
+    },
+    upper: {
       alignItems: 'center',
-      backgroundColor: 'gray'
+      width: '100%',
+      backgroundColor: 'white',
+      borderBottomWidth: 2,
+      borderBottomColor: Colors.gray400
+    },
+    lower: {
+      alignItems: 'center',
+      backgroundColor: Colors.gray000,
+      paddingVertical: 20
     },
     empty: {
       flex: 1
@@ -109,34 +134,47 @@ const styles = StyleSheet.create({
       height: 210
     },
     knowit: {
-      fontSize: 36
+      fontSize: 36,
+      marginVertical: 20
     },
-    input: {
-      borderWidth: 1,
-      borderColor: Colors.primary300,
-      alignSelf: 'stretch',
-      marginVertical: 36,
-      marginHorizontal: 24,
-      height: 64,
+    description: {
+      fontSize: 20,
+      color: Colors.gray600
+    },
+    inputLine: {
+      flexDirection: 'row',
+      borderWidth: 2,
+      borderColor: Colors.gray400,
+      backgroundColor: 'white',
       borderRadius: 6,
-      paddingHorizontal: 16,
+      alignSelf: 'stretch',
+      marginHorizontal: 24,
+      marginVertical: 24,
+      padding: 10,
+      overflow: 'hidden'
+    },
+    icon: {
+      marginTop: 2,
       fontSize: 24
     },
+    input: {
+      fontSize: 24,
+      marginHorizontal:24,
+      width: '100%'
+    },
     button: {
-      backgroundColor: Colors.primary300,
+      backgroundColor: Colors.primary200,
       alignItems: 'center',
       justifyContent: 'center',
-      alignSelf: 'stretch',
       paddingVertical: 12,
       paddingHorizontal: 32,
-      marginHorizontal: 32,
-      marginVertical: 12,
-      marginTop: 45,
+      marginVertical: 32,
+      marginTop: 85,
       borderRadius: 6
     },
     white: {
       color: 'white',
-      fontSize: 18
+      fontSize: 24
     },
     error: {
       color: 'red',
