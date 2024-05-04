@@ -1,6 +1,7 @@
 const Colors = {
     primary200: '#4B58DD',
     primary300: '#575DD9',
+    primary400: '#5138a4',
     primary600: '#18254D',
     gray000: '#f1f3f5',
     gray100: '#f4eefb',
@@ -10,7 +11,9 @@ const Colors = {
     gray500: '#ababab',
     gray600: '#878787',
     gray700: '#696969',
-    gray800: '#484848'
+    gray800: '#484848',
+    button100: '#1dc2eb',
+    button200: '#121f3c'
 };
 
 export default Colors;

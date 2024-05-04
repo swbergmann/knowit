@@ -88,7 +88,7 @@ function StartScreen({onStore, onGetName}) {
                     onPress={pressHandler}
                     android_ripple={{color: Colors.primary600}}
                     >
-                    <Text style={styles.white}>Login</Text>
+                    <Text style={styles.buttonText}>Login</Text>
                   </Pressable>
                 </View>
               </View>
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     pressed: {
       opacity: 0.75
     },
-    white: {
+    buttonText: {
       color: 'white',
       fontSize: 24
     },
