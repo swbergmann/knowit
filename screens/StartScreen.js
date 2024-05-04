@@ -55,6 +55,7 @@ function StartScreen({onStore, onGetName}) {
                   resizeMode='contain'
                 />
 
+                <Text style={styles.introduction}>to the quizzing app</Text>
                 <Text style={styles.knowit}>Know It?!</Text>
               </View>
               <View style={styles.lower}>
@@ -65,6 +66,7 @@ function StartScreen({onStore, onGetName}) {
                   <TextInput 
                     style={styles.input}
                     placeholder='Name'
+                    autoCorrect={false}
                     onChangeText={inputChangeHandler}
                     />
                 </View>
@@ -75,13 +77,20 @@ function StartScreen({onStore, onGetName}) {
                     {error}
                   </Text>
                 ))}
-
-                <Pressable 
-                  style={styles.button}
-                  onPress={pressHandler}
-                >
-                  <Text style={styles.white}>Login</Text>
-                </Pressable>
+                
+                <View style={styles.buttonOuterContainer}>
+                  <Pressable 
+                    style={({pressed}) =>
+                      pressed && Platform.OS === 'ios'
+                        ? [styles.buttonInnerContainer, styles.pressed]
+                        : styles.buttonInnerContainer
+                    }
+                    onPress={pressHandler}
+                    android_ripple={{color: Colors.primary600}}
+                    >
+                    <Text style={styles.white}>Login</Text>
+                  </Pressable>
+                </View>
               </View>
             </View>
             <View style={styles.empty}></View>
@@ -133,6 +142,9 @@ const styles = StyleSheet.create({
       width: '100%',
       height: 210
     },
+    introduction: {
+      fontSize: 22
+    },
     knowit: {
       fontSize: 36,
       marginVertical: 20
@@ -162,15 +174,22 @@ const styles = StyleSheet.create({
       marginHorizontal:24,
       width: '100%'
     },
-    button: {
+    buttonOuterContainer: {
+      borderRadius: 6,
+      overflow: 'hidden',
+      marginVertical: 32,
+      marginTop: 85
+    },
+    buttonInnerContainer: {
       backgroundColor: Colors.primary200,
       alignItems: 'center',
       justifyContent: 'center',
       paddingVertical: 12,
       paddingHorizontal: 32,
-      marginVertical: 32,
-      marginTop: 85,
-      borderRadius: 6
+      elevation: 4
+    },
+    pressed: {
+      opacity: 0.75
     },
     white: {
       color: 'white',
