@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, Pressable, Image } from 'react-native';
 import { SimpleLineIcons } from "@expo/vector-icons";
+import { FontAwesome } from '@expo/vector-icons';
 
 import Colors from '../constants/colors';
 
@@ -13,7 +14,7 @@ function PlayerScreen({onRemove, onGetName, storedName}) {
       <View style={styles.inner}>
         <View style={styles.playerContainer}>
           <View style={styles.playerRow}>
-            <SimpleLineIcons name='graduation' color='black' style={styles.study}/>
+            <SimpleLineIcons name='graduation' style={styles.study}/>
             <Text style={styles.playerName}>{storedName}</Text>
           </View>
           <View style={styles.playerRow}>
@@ -30,25 +31,37 @@ function PlayerScreen({onRemove, onGetName, storedName}) {
               <Text style={styles.buttonText}>Start game</Text>
             </Pressable>
           </View>
-          <View style={styles.playerRow}>
-            <Text>Play the game to unlock badges.</Text>
-          </View>
         </View>
         <View style={styles.badgesContainer}>
-          <Text>Your badges:</Text>
-          <Text> <SimpleLineIcons name='badge'/> Historian</Text>
-          <Text> <SimpleLineIcons name='badge'/> Researcher</Text>
-          <Text> <SimpleLineIcons name='badge'/> Journalist</Text>
-          <Text> <SimpleLineIcons name='badge'/> Librarian</Text>
+          <View style={styles.playerRow}>
+            <Text style={styles.introduction}>Play the game to unlock badges.</Text>
+          </View>
+          <View style={styles.playerRow}>
+            <FontAwesome name="star-o" style={styles.badgeIcon} />
+            <Text style={styles.badgeText}>Historian</Text>
+            <FontAwesome name="star-o" style={styles.badgeIcon} />
+          </View>
+          <View style={styles.playerRow}>
+            <FontAwesome name="star-o" style={styles.badgeIcon} />
+            <Text style={styles.badgeText}>Researcher</Text>
+            <FontAwesome name="star-o" style={styles.badgeIcon} />
+          </View>
+          <View style={styles.playerRow}>
+            <FontAwesome name="star-o" style={styles.badgeIcon} />
+            <Text style={styles.badgeText}>Journalist</Text>
+            <FontAwesome name="star-o" style={styles.badgeIcon} />
+          </View>
+          <View style={styles.playerRow}>
+            <FontAwesome name="star" style={styles.badgeIcon} />
+            <Text style={styles.badgeText}>Librarian</Text>
+            <FontAwesome name="star" style={styles.badgeIcon} />
+          </View>
         </View>
         <View style={styles.highscoreContainer}>
           <Text>Highscore:</Text>
           <Text>100p. Sebi</Text>
           <Text>86p. Steve</Text>
           <Text>78p. Paul</Text>
-        </View>
-        <View style={styles.buttonsContainer}>
-          
         </View>
       </View>
     </View>
@@ -67,10 +80,11 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     margin: 20,
     borderRadius: 8,
-    marginTop: 160
+    marginTop: 110,
+    marginBottom: 50
   },
   playerContainer: {
-    flex: 4,
+    flex: 2,
     alignItems: 'center',
     backgroundColor: 'white'
   },
@@ -80,24 +94,32 @@ const styles = StyleSheet.create({
     marginVertical: 12
   },
   study: {
-    fontSize: 38
+    fontSize: 38,
+    color: 'black'
   },
   playerName: {
     fontSize: 36,
     marginLeft: 12
   },
+  introduction: {
+    fontSize: 20
+  },
   badgesContainer: {
     flex: 4,
-    backgroundColor: 'orange'
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
+  badgeIcon: {
+    fontSize: 38,
+    color: 'black'
+  },
+  badgeText: {
+    fontSize: 28,
+    marginHorizontal: 20
   },
   highscoreContainer: {
-    flex: 4,
+    flex: 3,
     backgroundColor: 'yellow'
-  },
-  buttonsContainer: {
-    flex: 1,
-    backgroundColor: 'pink',
-    flexDirection: 'row'
   },
   buttonInnerContainer: {
     alignItems: 'center',
