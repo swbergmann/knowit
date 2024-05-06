@@ -1,14 +1,19 @@
+import { useState, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { StyleSheet, View, Text, Pressable, Image, Platform } from 'react-native';
 import { SimpleLineIcons } from "@expo/vector-icons";
-import { FontAwesome } from '@expo/vector-icons';
 
 import Colors from '../constants/colors';
+import Badges from '../components/Badges';
 
 function PlayerScreen({onRemove, onGetName, storedName}) {
+
   function eraseHandler() {
     onRemove();
     onGetName(); // update storedName to switch screens
   }
+
   /**
    * Every time a game finishes, we try to store the score of the player into the AsyncStorage
    * We check the current score against the keys "first_score", then "second_score", then "third_score"
@@ -61,26 +66,7 @@ function PlayerScreen({onRemove, onGetName, storedName}) {
             </View>
           </View>
         </View>
-        <View style={styles.badgesContainer}>
-          <View style={styles.row}>
-            <Text style={styles.introduction}>Play the game to unlock badges.</Text>
-          </View>
-          <View style={styles.row}>
-            <FontAwesome name="star-o" style={styles.badgeIcon} />
-            <Text style={styles.badgeText}>Historian</Text>
-            <FontAwesome name="star-o" style={styles.badgeIcon} />
-          </View>
-          <View style={styles.row}>
-            <FontAwesome name="star-o" style={styles.badgeIcon} />
-            <Text style={styles.badgeText}>Researcher</Text>
-            <FontAwesome name="star-o" style={styles.badgeIcon} />
-          </View>
-          <View style={styles.row}>
-            <FontAwesome name="star" style={styles.badgeIconUnlocked} />
-            <Text style={styles.badgeTextUnlocked}>Journalist</Text>
-            <FontAwesome name="star" style={styles.badgeIconUnlocked} />
-          </View>
-        </View>
+        <Badges storedName={storedName} />
         <View style={styles.highscoreContainer}>
           <View style={styles.row}>
             <Text style={styles.heading}>Highscore Leaderboard</Text>
@@ -147,25 +133,12 @@ const styles = StyleSheet.create({
     fontSize: 36,
     marginLeft: 12
   },
-  introduction: {
-    fontSize: 20
-  },
-  badgesContainer: {
-    flex: 4,
-    alignItems: 'center',
-    backgroundColor: 'white',
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.gray400,
-    padding: 20
-  },
   rowDark: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     marginVertical: 4,
-    // marginHorizontal: 20,
     backgroundColor: Colors.gray150,
-    // paddingHorizontal: 16,
     alignSelf: 'stretch',
     borderRadius: 8
   },
@@ -194,23 +167,6 @@ const styles = StyleSheet.create({
   score: {
     flex: 4,
     fontSize: 20
-  },
-  badgeIcon: {
-    fontSize: 30,
-    color: Colors.gray400
-  },
-  badgeText: {
-    fontSize: 24,
-    marginHorizontal: 20,
-    color: Colors.gray400
-  },
-  badgeIconUnlocked: {
-    fontSize: 30,
-    color: Colors.gold
-  },
-  badgeTextUnlocked: {
-    fontSize: 24,
-    marginHorizontal: 20
   },
   highscoreContainer: {
     flex: 4,
