@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable, Image } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Image, Platform } from 'react-native';
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -9,6 +9,21 @@ function PlayerScreen({onRemove, onGetName, storedName}) {
     onRemove();
     onGetName(); // update storedName to switch screens
   }
+  /**
+   * Every time a game finishes, we try to store the score of the player into the AsyncStorage
+   * We check the current score against the keys "first_score", then "second_score", then "third_score"
+   * 
+   */
+
+  // let highscore = {
+  //   first_score: "100",
+  //   first_name: "{name}",
+  //   second_score: "85",
+  //   second_name: "{name}",
+  //   third_score: "78",
+  //   third_name: "{name}"
+  // };
+
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -18,50 +33,73 @@ function PlayerScreen({onRemove, onGetName, storedName}) {
             <Text style={styles.playerName}>{storedName}</Text>
           </View>
           <View style={styles.playerRow}>
-            <Pressable 
-                style={[styles.buttonInnerContainer, styles.changeNameButton]}
+            <View style={styles.buttonOuterContainer}>
+              <Pressable 
+                style={({pressed}) =>
+                  pressed && Platform.OS === 'ios'
+                    ? [styles.buttonInnerContainer, styles.changeNameButton, styles.pressed]
+                    : [styles.buttonInnerContainer, styles.changeNameButton]
+                }
                 onPress={eraseHandler}
-            >
-              <Text style={styles.buttonText}>Change name</Text>
-            </Pressable>
-            <Pressable 
-                style={[styles.buttonInnerContainer, styles.startGameButton]}
+                android_ripple={{color: Colors.button200}}
+              >
+                <Text style={styles.buttonText}>Logout</Text>
+              </Pressable>
+            </View>
+            <View style={styles.buttonOuterContainer}>
+              <Pressable 
+                style={({pressed}) =>
+                  pressed && Platform.OS === 'ios'
+                    ? [styles.buttonInnerContainer, styles.startGameButton, styles.pressed]
+                    : [styles.buttonInnerContainer, styles.startGameButton]
+                }
                 onPress={null}
-            >
-              <Text style={styles.buttonText}>Start game</Text>
-            </Pressable>
+                android_ripple={{color: Colors.button400}}
+              >
+                <Text style={styles.buttonText}>Play</Text>
+              </Pressable>
+            </View>
           </View>
         </View>
         <View style={styles.badgesContainer}>
-          <View style={styles.playerRow}>
+          <View style={styles.row}>
             <Text style={styles.introduction}>Play the game to unlock badges.</Text>
           </View>
-          <View style={styles.playerRow}>
+          <View style={styles.row}>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
             <Text style={styles.badgeText}>Historian</Text>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
           </View>
-          <View style={styles.playerRow}>
+          <View style={styles.row}>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
             <Text style={styles.badgeText}>Researcher</Text>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
           </View>
-          <View style={styles.playerRow}>
-            <FontAwesome name="star-o" style={styles.badgeIcon} />
-            <Text style={styles.badgeText}>Journalist</Text>
-            <FontAwesome name="star-o" style={styles.badgeIcon} />
-          </View>
-          <View style={styles.playerRow}>
-            <FontAwesome name="star" style={styles.badgeIcon} />
-            <Text style={styles.badgeText}>Librarian</Text>
-            <FontAwesome name="star" style={styles.badgeIcon} />
+          <View style={styles.row}>
+            <FontAwesome name="star" style={styles.badgeIconUnlocked} />
+            <Text style={styles.badgeTextUnlocked}>Journalist</Text>
+            <FontAwesome name="star" style={styles.badgeIconUnlocked} />
           </View>
         </View>
         <View style={styles.highscoreContainer}>
-          <Text>Highscore:</Text>
-          <Text>100p. Sebi</Text>
-          <Text>86p. Steve</Text>
-          <Text>78p. Paul</Text>
+          <View style={styles.row}>
+            <Text style={styles.heading}>Highscore Leaderboard</Text>
+          </View>
+          <View style={styles.rowDark}>
+            <SimpleLineIcons name="badge" style={styles.firstPlace} />
+            <Text style={styles.name}>SebastianB</Text>
+            <Text style={styles.score}>Score: 100</Text>
+          </View>
+          <View style={styles.rowDark}>
+            <SimpleLineIcons name="badge" style={styles.secondPlace} />
+            <Text style={styles.name}>Mina Miau</Text>
+            <Text style={styles.score}>Score: 88</Text>
+          </View>
+          <View style={styles.rowDark}>
+            <SimpleLineIcons name="badge" style={styles.thirdPlace} />
+            <Text style={styles.name}>Bob</Text>
+            <Text style={styles.score}>Score: 83</Text>
+          </View>
         </View>
       </View>
     </View>
@@ -84,14 +122,22 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   playerContainer: {
-    flex: 2,
+    flex: 3,
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.gray400,
+    padding: 20
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 8
   },
   playerRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 12
+    marginVertical: 16
   },
   study: {
     fontSize: 38,
@@ -107,19 +153,77 @@ const styles = StyleSheet.create({
   badgesContainer: {
     flex: 4,
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.gray400,
+    padding: 20
+  },
+  rowDark: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 4,
+    // marginHorizontal: 20,
+    backgroundColor: Colors.gray150,
+    // paddingHorizontal: 16,
+    alignSelf: 'stretch',
+    borderRadius: 8
+  },
+  firstPlace: {
+    flex: 1,
+    paddingHorizontal: 12,
+    fontSize: 30,
+    color: Colors.gold
+  },
+  secondPlace: {
+    flex: 1,
+    paddingHorizontal: 12,
+    fontSize: 30,
+    color: Colors.silver
+  },
+  thirdPlace: {
+    flex: 1,
+    paddingHorizontal: 12,
+    fontSize: 30,
+    color: Colors.bronze
+  },
+  name: {
+    flex: 5,
+    fontSize: 20
+  },
+  score: {
+    flex: 4,
+    fontSize: 20
   },
   badgeIcon: {
-    fontSize: 38,
-    color: 'black'
+    fontSize: 30,
+    color: Colors.gray400
   },
   badgeText: {
-    fontSize: 28,
+    fontSize: 24,
+    marginHorizontal: 20,
+    color: Colors.gray400
+  },
+  badgeIconUnlocked: {
+    fontSize: 30,
+    color: Colors.gold
+  },
+  badgeTextUnlocked: {
+    fontSize: 24,
     marginHorizontal: 20
   },
   highscoreContainer: {
-    flex: 3,
-    backgroundColor: 'yellow'
+    flex: 4,
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 20
+  },
+  heading: {
+    fontSize: 20
+  },
+  buttonOuterContainer: {
+    borderRadius: 6,
+    overflow: 'hidden'
   },
   buttonInnerContainer: {
     alignItems: 'center',
@@ -129,11 +233,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     borderRadius: 6
   },
+  pressed: {
+    opacity: 0.75
+  },
   changeNameButton: {
     backgroundColor: Colors.button100
   },
   startGameButton: {
-    backgroundColor: Colors.button200,
+    backgroundColor: Colors.button300,
     marginLeft: 30
   },
   buttonText: {

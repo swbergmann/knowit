@@ -28,8 +28,8 @@ function StartScreen({onStore, onGetName}) {
       errors.name = 'Name is required.';
     } else if (userInput.length < 3) {
       errors.name = 'Name must be at least 3 characters.';
-    } else if (userInput.length > 12) {
-      errors.name = 'Maximum length is 12 characters.';
+    } else if (userInput.length > 10) {
+      errors.name = 'Maximum length is 10 characters.';
     }
 
     setErrors(errors);
