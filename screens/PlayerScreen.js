@@ -5,7 +5,8 @@ import { StyleSheet, View, Text, Pressable, Image, Platform } from 'react-native
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 import Colors from '../constants/colors';
-import Badges from '../components/Badges';
+import BadgesContainer from '../components/BadgesContainer';
+import HighscoreContainer from '../components/HighscoreContainer';
 
 function PlayerScreen({onRemove, onGetName, storedName}) {
 
@@ -15,21 +16,6 @@ function PlayerScreen({onRemove, onGetName, storedName}) {
     onRemove();
     onGetName(); // update storedName to switch screens
   }
-
-  /**
-   * Every time a game finishes, we try to store the score of the player into the AsyncStorage
-   * We check the current score against the keys "first_score", then "second_score", then "third_score"
-   * 
-   */
-
-  // let highscore = {
-  //   first_score: "100",
-  //   first_name: "{name}",
-  //   second_score: "85",
-  //   second_name: "{name}",
-  //   third_score: "78",
-  //   third_name: "{name}"
-  // };
 
   return (
     <View style={styles.container}>
@@ -68,27 +54,10 @@ function PlayerScreen({onRemove, onGetName, storedName}) {
             </View>
           </View>
         </View>
-        <Badges storedName={storedName} />
-        <View style={styles.highscoreContainer}>
-          <View style={styles.row}>
-            <Text style={styles.heading}>Highscore Leaderboard</Text>
-          </View>
-          <View style={styles.rowDark}>
-            <SimpleLineIcons name="badge" style={styles.firstPlace} />
-            <Text style={styles.name}>SebastianB</Text>
-            <Text style={styles.score}>Score: 100</Text>
-          </View>
-          <View style={styles.rowDark}>
-            <SimpleLineIcons name="badge" style={styles.secondPlace} />
-            <Text style={styles.name}>Mina Miau</Text>
-            <Text style={styles.score}>Score: 88</Text>
-          </View>
-          <View style={styles.rowDark}>
-            <SimpleLineIcons name="badge" style={styles.thirdPlace} />
-            <Text style={styles.name}>Bob</Text>
-            <Text style={styles.score}>Score: 83</Text>
-          </View>
-        </View>
+
+        <BadgesContainer storedName={storedName} />
+
+        <HighscoreContainer />
       </View>
     </View>
   );
@@ -117,11 +86,6 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.gray400,
     padding: 20
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 8
-  },
   playerRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -134,50 +98,6 @@ const styles = StyleSheet.create({
   playerName: {
     fontSize: 36,
     marginLeft: 12
-  },
-  rowDark: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 4,
-    backgroundColor: Colors.gray150,
-    alignSelf: 'stretch',
-    borderRadius: 8
-  },
-  firstPlace: {
-    flex: 1,
-    paddingHorizontal: 12,
-    fontSize: 30,
-    color: Colors.gold
-  },
-  secondPlace: {
-    flex: 1,
-    paddingHorizontal: 12,
-    fontSize: 30,
-    color: Colors.silver
-  },
-  thirdPlace: {
-    flex: 1,
-    paddingHorizontal: 12,
-    fontSize: 30,
-    color: Colors.bronze
-  },
-  name: {
-    flex: 5,
-    fontSize: 20
-  },
-  score: {
-    flex: 4,
-    fontSize: 20
-  },
-  highscoreContainer: {
-    flex: 4,
-    alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 20
-  },
-  heading: {
-    fontSize: 20
   },
   buttonOuterContainer: {
     borderRadius: 6,

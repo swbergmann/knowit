@@ -6,7 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 
 import Colors from '../constants/colors';
 
-function Badges({storedName}) {
+function BadgesContainer({storedName}) {
     console.log("Badges");
     console.log(storedName);
     /* assign storedName to const 
@@ -31,6 +31,7 @@ function Badges({storedName}) {
     * In this way various players each have their individual state of badges.
     */
 
+    // LOAD player's badges from storage
     const getBadges = async () => {
         console.log("getBadges----");
         let badges = {};
@@ -40,7 +41,7 @@ function Badges({storedName}) {
             console.log("key " + key);
             let badgeJournalist = await AsyncStorage.getItem(key);
             console.log("badgeJournalist " + badgeJournalist);
-            if (badgeJournalist !== null) {
+            if (badgeJournalist != null) {
                 badges.journalist = true;
             }
         } catch (e) {console.log(e);}
@@ -49,7 +50,7 @@ function Badges({storedName}) {
             let key = storedName + '-researcher';
             let badgeResearcher = await AsyncStorage.getItem(key);
             console.log("badgeResearcher " + badgeResearcher);
-            if (badgeResearcher !== null) {
+            if (badgeResearcher != null) {
                 badges.researcher = true;
             }
         } catch (e) {console.log(e);}
@@ -58,7 +59,7 @@ function Badges({storedName}) {
             let key = storedName + '-historian';
             let badgeHistorian = await AsyncStorage.getItem(key);
             console.log("badgeHistorian " + badgeHistorian);
-            if (badgeHistorian !== null) {
+            if (badgeHistorian != null) {
                 badges.historian = true;
             }
         } catch (e) {console.log(e);}
@@ -66,6 +67,7 @@ function Badges({storedName}) {
         setBadges(badges);
     };
 
+    // SET styling for the content to be rendered
     console.log("badges.historian " + badges.historian);
     if (badges.historian === true) {
         historian = (
@@ -117,6 +119,7 @@ function Badges({storedName}) {
         </>
     )};
 
+    // TEST functionality
     const addBadge = async () => {
         console.log("addBadge++++++");
         let key = playerName + "-researcher";
@@ -127,32 +130,34 @@ function Badges({storedName}) {
         getBadges(playerName);
     };
 
+    // define when to load badges
+    // i.e. empty array means only on first page load
     useEffect(() => {
         getBadges(playerName);
     }, []);
     
     return(
         <View style={styles.badgesContainer}>
-          <View style={styles.row}>
-            <Text style={styles.introduction}>Play the game to unlock badges.</Text>
-          </View>
-          <View style={styles.row}>
-              {historian}
-          </View>
-          <View style={styles.row}>
-              {researcher}
-          </View>
-          <View style={styles.row}>
-              {journalist}
-          </View>
-          <Pressable onPress={addBadge}>
-            <Text>Test</Text>
-          </Pressable>
+            <View style={styles.row}>
+                <Text style={styles.introduction}>Play the game to unlock badges.</Text>
+            </View>
+            <View style={styles.row}>
+                {historian}
+            </View>
+            <View style={styles.row}>
+                {researcher}
+            </View>
+            <View style={styles.row}>
+                {journalist}
+            </View>
+            <Pressable onPress={addBadge}>
+                <Text>Test</Text>
+            </Pressable>
         </View>
     );
 }
 
-export default Badges;
+export default BadgesContainer;
 
 const styles = StyleSheet.create({
     row: {
