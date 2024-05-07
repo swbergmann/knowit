@@ -5,9 +5,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import StartScreen from './screens/StartScreen';
 import PlayerScreen from './screens/PlayerScreen';
+import GameScreen from './screens/GameScreen';
 
 export default function App() {
   const [storedName, setStoredName] = useState();
+  const [gameInPlay, setGameInPlay] = useState(false);
 
   const storeName = async (userInput) => {
     try {
@@ -34,7 +36,16 @@ export default function App() {
   let screen = <StartScreen onStore={storeName} onGetName={getName} />;
 
   if (storedName) {
-    screen = <PlayerScreen onRemove={removeName} onGetName={getName} storedName={storedName}/>;
+    screen = <PlayerScreen 
+                onRemove={removeName}
+                onGetName={getName}
+                storedName={storedName}
+                onPlay={setGameInPlay}
+              />;
+  }
+
+  if (gameInPlay) {
+    screen = <GameScreen />;
   }
 
   return (

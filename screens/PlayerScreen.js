@@ -8,7 +8,7 @@ import Colors from '../constants/colors';
 import BadgesContainer from '../components/BadgesContainer';
 import HighscoreContainer from '../components/HighscoreContainer';
 
-function PlayerScreen({onRemove, onGetName, storedName}) {
+function PlayerScreen({onRemove, onGetName, storedName, onPlay}) {
 
   console.log("PlayerScreen storedName");
   console.log(storedName);
@@ -46,7 +46,7 @@ function PlayerScreen({onRemove, onGetName, storedName}) {
                     ? [styles.buttonInnerContainer, styles.startGameButton, styles.pressed]
                     : [styles.buttonInnerContainer, styles.startGameButton]
                 }
-                onPress={null}
+                onPress={onPlay}
                 android_ripple={{color: Colors.button400}}
               >
                 <Text style={styles.buttonText}>Play</Text>
