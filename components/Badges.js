@@ -7,6 +7,14 @@ import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 
 function Badges({storedName}) {
+    console.log("Badges");
+    console.log(storedName);
+    /* assign storedName to const 
+    * to make it accessible in this function
+    * to be used whenever needed in the JS code
+    */
+    const playerName = storedName;
+    
     const [badges, setBadges] = useState({});
 
     /**
@@ -23,13 +31,12 @@ function Badges({storedName}) {
     * In this way various players each have their individual state of badges.
     */
 
-    const getBadges = async ({storedName}) => {
-        console.log("getBadges-----");
-        console.log(storedName);
+    const getBadges = async () => {
+        console.log("getBadges----");
         let badges = {};
 
         try { // Journalist
-            let key = storedName + '-journalist';
+            let key = playerName + '-journalist';
             console.log("key " + key);
             let badgeJournalist = await AsyncStorage.getItem(key);
             console.log("badgeJournalist " + badgeJournalist);
@@ -110,18 +117,18 @@ function Badges({storedName}) {
         </>
     )};
 
-    const addBadge = async ({storedName}) => {
-        console.log("addBadge");
-        let key = storedName + "-journalist";
+    const addBadge = async () => {
+        console.log("addBadge++++++");
+        let key = playerName + "-researcher";
         console.log("addBadge key: " + key);
         try {
           await AsyncStorage.setItem(key, "true");
         } catch (e) {console.log(e);}
-        getBadges(storedName);
+        getBadges(playerName);
     };
 
     useEffect(() => {
-        getBadges(storedName);
+        getBadges(playerName);
     }, []);
     
     return(

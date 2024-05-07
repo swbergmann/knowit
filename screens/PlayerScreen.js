@@ -9,6 +9,8 @@ import Badges from '../components/Badges';
 
 function PlayerScreen({onRemove, onGetName, storedName}) {
 
+  console.log("PlayerScreen storedName");
+  console.log(storedName);
   function eraseHandler() {
     onRemove();
     onGetName(); // update storedName to switch screens
