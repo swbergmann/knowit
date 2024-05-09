@@ -2,6 +2,7 @@ class Question {
     constructor(
         id,
         type,
+        title,
         text,
         hint,
         answers,
@@ -11,6 +12,7 @@ class Question {
     ) {
         this.id = id;
         this.type = type;
+        this.title = title;
         this.text = text;
         this.hint = hint;
         this.joker = joker;

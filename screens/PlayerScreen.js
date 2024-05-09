@@ -8,7 +8,7 @@ import Colors from '../constants/colors';
 import BadgesContainer from '../components/BadgesContainer';
 import HighscoreContainer from '../components/HighscoreContainer';
 
-function PlayerScreen({onRemove, onGetName, storedName, onPlay}) {
+function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
 
   console.log("PlayerScreen storedName");
   console.log(storedName);
@@ -46,7 +46,7 @@ function PlayerScreen({onRemove, onGetName, storedName, onPlay}) {
                     ? [styles.buttonInnerContainer, styles.startGameButton, styles.pressed]
                     : [styles.buttonInnerContainer, styles.startGameButton]
                 }
-                onPress={onPlay}
+                onPress={onStartGame}
                 android_ripple={{color: Colors.button400}}
               >
                 <Text style={styles.buttonText}>Play</Text>
@@ -100,13 +100,15 @@ const styles = StyleSheet.create({
     marginLeft: 12
   },
   buttonOuterContainer: {
+    flex: 1,
     borderRadius: 6,
     overflow: 'hidden'
   },
   buttonInnerContainer: {
+    width: 120,
     alignItems: 'center',
     justifyContent: 'center',
-    alignSelf: 'stretch',
+    alignSelf: 'center',
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 6
@@ -119,7 +121,7 @@ const styles = StyleSheet.create({
   },
   startGameButton: {
     backgroundColor: Colors.button300,
-    marginLeft: 30
+    // marginLeft: 30
   },
   buttonText: {
     color: 'white',

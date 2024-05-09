@@ -4,17 +4,17 @@
 Private, empty - no files, no license.
 
 ## Create new React Native Project ##
-npx create-expo-app ProjectName  
+### npx create-expo-app ProjectName ###
 cd ProjectName
 
 ## Open VS Code ##
 code .  
 Terminal/ New Terminal  
-npm start  
+### npm start ###
 
 ## Debuggin ##
 Open new VS Code Terminal (plus icon)
-react-devtools  
+### react-devtools ###
 This opens the React DevTools window which automatically connects to the iOS Simulator or AVD upon onening them (after the React Devtools were opened).
 
 ## Test the App ##

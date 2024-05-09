@@ -4,6 +4,7 @@ export const QUESTIONS = [
     new Question(
         'q1',
         'multiselect',
+        'Question 1',
         'Select all states that have a mediterranian climate.',
         'Mediterranian climates occur only in western-bound locations.',
         {
@@ -19,6 +20,7 @@ export const QUESTIONS = [
     new Question(
         'q2',
         'sort',
+        'Question 2',
         'Sort these australian cities based on their population from highest to lowest.',
         'As of now, Sydney is still the most populous city of Australia.',
         {

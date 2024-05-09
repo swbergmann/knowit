@@ -32,20 +32,30 @@ export default function App() {
 
   useEffect(() => {getName();}, []); // query the name from async storage only on the first loading of the page
 
-  // use props to pass pointers to these functions to the component
-  let screen = <StartScreen onStore={storeName} onGetName={getName} />;
+  function startGame() {
+    setGameInPlay(true);
+  }
 
-  if (storedName) {
+  function endGame() {
+    setGameInPlay(false);
+  }
+
+  /* Use props to pass pointers to these functions to the component
+  *  or pass the values to the components.
+  */
+  let screen;
+
+  if (storedName && !gameInPlay) { // name is found in the storage AND game is not started
     screen = <PlayerScreen 
                 onRemove={removeName}
                 onGetName={getName}
                 storedName={storedName}
-                onPlay={setGameInPlay}
+                onStartGame={startGame}
               />;
-  }
-
-  if (gameInPlay) {
-    screen = <GameScreen />;
+  } else if (storedName && gameInPlay) { // name is found in the storage AND game is started
+    screen = <GameScreen onEndGame={endGame} />;
+  } else { // no name found in the storage
+    screen = <StartScreen onStore={storeName} onGetName={getName} />
   }
 
   return (
