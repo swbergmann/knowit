@@ -110,8 +110,6 @@ function HighscoreContainer() {
             </View>);
     }
 
-    console.log(noHighscoresMessage);
-
     return(
         <View style={styles.highscoreContainer}>
             <View style={styles.row}>

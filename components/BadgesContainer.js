@@ -7,8 +7,6 @@ import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../constants/colors';
 
 function BadgesContainer({storedName}) {
-    console.log("Badges");
-    console.log(storedName);
     /* assign storedName to const 
     * to make it accessible in this function
     * to be used whenever needed in the JS code
@@ -33,14 +31,12 @@ function BadgesContainer({storedName}) {
 
     // LOAD player's badges from storage
     const getBadges = async () => {
-        console.log("getBadges----");
         let badges = {};
 
         try { // Journalist
             let key = playerName + '-journalist';
-            console.log("key " + key);
             let badgeJournalist = await AsyncStorage.getItem(key);
-            console.log("badgeJournalist " + badgeJournalist);
+
             if (badgeJournalist != null) {
                 badges.journalist = true;
             }
@@ -49,7 +45,7 @@ function BadgesContainer({storedName}) {
         try { // Researcher
             let key = storedName + '-researcher';
             let badgeResearcher = await AsyncStorage.getItem(key);
-            console.log("badgeResearcher " + badgeResearcher);
+
             if (badgeResearcher != null) {
                 badges.researcher = true;
             }
@@ -58,7 +54,7 @@ function BadgesContainer({storedName}) {
         try { // Historian
             let key = storedName + '-historian';
             let badgeHistorian = await AsyncStorage.getItem(key);
-            console.log("badgeHistorian " + badgeHistorian);
+
             if (badgeHistorian != null) {
                 badges.historian = true;
             }
@@ -68,7 +64,6 @@ function BadgesContainer({storedName}) {
     };
 
     // SET styling for the content to be rendered
-    console.log("badges.historian " + badges.historian);
     if (badges.historian === true) {
         historian = (
         <>
@@ -85,7 +80,6 @@ function BadgesContainer({storedName}) {
         </>
     )};
 
-    console.log("badges.researcher " + badges.researcher);
     if (badges.researcher === true) {
         researcher = (
         <>
@@ -102,7 +96,6 @@ function BadgesContainer({storedName}) {
         </>
     )};
 
-    console.log("badges.journalist " + badges.journalist);
     if (badges.journalist === true) {
         journalist = (
         <>
@@ -121,9 +114,8 @@ function BadgesContainer({storedName}) {
 
     // TEST functionality
     const addBadge = async () => {
-        console.log("addBadge++++++");
         let key = playerName + "-researcher";
-        console.log("addBadge key: " + key);
+
         try {
           await AsyncStorage.setItem(key, "true");
         } catch (e) {console.log(e);}

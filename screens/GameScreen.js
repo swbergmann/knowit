@@ -1,35 +1,46 @@
+import { useState, useEffect } from 'react';
 import { StyleSheet, View, Text, Pressable, FlatList, Platform } from 'react-native';
 
+// loads an array of question from the game-data.js file
 import { QUESTIONS } from '../data/game-data';
 
 import Colors from '../constants/colors';
 import QuestionContainer from '../components/QuestionContainer';
 
-/* created outside of the component function since it doesn't 
-*  have to be re-created when the component re-renders
-*/
-function renderQuestionItem(itemData) {
-    return(
-        <QuestionContainer
-            text={itemData.item.text}
-            hint={itemData.item.hint}
-        />
-    );
-}
-
 function GameScreen({onEndGame}) {
-    console.log('QUESTIONS');
-    console.log(QUESTIONS);
+    const [index, setIndex] = useState(0); // helper to iterate over the QUESTIONS
+    console.log('index----');
+    console.log(index);
+
+    let question =  <QuestionContainer
+                        text={QUESTIONS[index].text}
+                        hint={QUESTIONS[index].hint}
+                    />;
+
+    function submitHandler() {
+        console.log("submitHandler----");
+        console.log(index);
+        if (index < 1) { // load next question
+            let count = index + 1;
+            setIndex(count);
+        } else { // finish the game
+            onEndGame();
+        }
+    };
+
     return(
         <View style={styles.container}>
             <View style={styles.inner}>
                 <View style={styles.gameContainer}>
                     <Text>GameScreen</Text>
-                    <FlatList
+
+                    {question}
+
+                    {/* <FlatList
                         data={QUESTIONS}
                         keyExtractor={(item) => item.id}
                         renderItem={renderQuestionItem}
-                        />
+                        /> */}
                     <View style={styles.buttonsRow}>
                         <View style={styles.buttonOuterContainer}>
                         <Pressable 
@@ -51,7 +62,7 @@ function GameScreen({onEndGame}) {
                                 ? [styles.buttonInnerContainer, styles.submitAnswerButton, styles.pressed]
                                 : [styles.buttonInnerContainer, styles.submitAnswerButton]
                             }
-                            onPress={null}
+                            onPress={submitHandler}
                             android_ripple={{color: Colors.button400}}
                         >
                             <Text style={styles.buttonText}>Submit</Text>

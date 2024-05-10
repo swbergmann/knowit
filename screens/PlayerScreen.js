@@ -1,7 +1,4 @@
-import { useState, useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-import { StyleSheet, View, Text, Pressable, Image, Platform } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Platform } from 'react-native';
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 import Colors from '../constants/colors';
@@ -10,8 +7,6 @@ import HighscoreContainer from '../components/HighscoreContainer';
 
 function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
 
-  console.log("PlayerScreen storedName");
-  console.log(storedName);
   function eraseHandler() {
     onRemove();
     onGetName(); // update storedName to switch screens
