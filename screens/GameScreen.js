@@ -32,7 +32,6 @@ function GameScreen({onEndGame}) {
         <View style={styles.container}>
             <View style={styles.inner}>
                 <View style={styles.gameContainer}>
-                    <Text>GameScreen</Text>
 
                     {question}
 
