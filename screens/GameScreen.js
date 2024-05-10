@@ -1,45 +1,70 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, View, Text, Pressable, FlatList, Platform } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Platform } from 'react-native';
 
-// loads an array of question from the game-data.js file
+// loads an array of question objects from the game-data.js file
 import { QUESTIONS } from '../data/game-data';
 
 import Colors from '../constants/colors';
-import QuestionContainer from '../components/QuestionContainer';
 
 function GameScreen({onEndGame}) {
     const [index, setIndex] = useState(0); // helper to iterate over the QUESTIONS
-    console.log('index----');
-    console.log(index);
+    const [count, setCount] = useState(100); // points for correct answer decrease over time
 
-    let question =  <QuestionContainer
-                        text={QUESTIONS[index].text}
-                        hint={QUESTIONS[index].hint}
-                    />;
-
-    function submitHandler() {
-        console.log("submitHandler----");
-        console.log(index);
+    function submitHandler() { // submit button pressed
         if (index < 1) { // load next question
             let count = index + 1;
             setIndex(count);
+            setCount(100);
         } else { // finish the game
             onEndGame();
         }
     };
 
+    let width = count; // assign count here to use it within barInnerStyle()
+    
+    function barInnerStyle() { // style the time-bar dynamically
+        let newColor;
+        let newWidth = width + '%';
+
+        if (width > 60) {
+            newColor = 'green';
+        } else if (width > 30) {
+            newColor = Colors.gold;
+        } else {
+            newColor = 'red';
+        }
+
+        return { // return the dynamic style of the time-bar
+            backgroundColor: newColor,
+            width: newWidth
+        }
+    }
+
+    useEffect(() => {
+        const timer = count > 0 && setTimeout(() => setCount(count - 1), 1000);
+        return () => clearTimeout(timer); // clear timeout when switching screen to next question
+    }, [count]);
+
     return(
         <View style={styles.container}>
             <View style={styles.inner}>
                 <View style={styles.gameContainer}>
+                    <View>
+                        <Text>Points to earn: {count}</Text>
+                        <View style={styles.barOuter}>
+                            <View style={barInnerStyle()}>
+                                <Text></Text>
+                            </View>
+                        </View>
+                        <View>
+                            <Text>TEST</Text>
+                            <Text>{QUESTIONS[index].text}</Text>
+                        </View>
+                        <View>
+                            <Text>{QUESTIONS[index].hint}</Text>
+                        </View>
+                    </View>
 
-                    {question}
-
-                    {/* <FlatList
-                        data={QUESTIONS}
-                        keyExtractor={(item) => item.id}
-                        renderItem={renderQuestionItem}
-                        /> */}
                     <View style={styles.buttonsRow}>
                         <View style={styles.buttonOuterContainer}>
                         <Pressable 
@@ -126,5 +151,20 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'white',
         fontSize: 24
+    },
+    barOuter: {
+        flexDirection: 'row',
+        overflow: 'hidden',
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: Colors.gray600,
+        backgroundColor: 'white',
+        alignSelf: 'stretch',
+        marginHorizontal: 0,
+        marginVertical: 0,
+        padding: 0,
+        maxWidth: '98%',
+        overflow: 'hidden',
+        backgroundColor: Colors.gray600
     }
 });
