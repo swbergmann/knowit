@@ -77,7 +77,7 @@ export default function App() {
                 onStartGame={startGame}
               />;
   } else if (storedName && gameInPlay) { // name is found in the storage AND game is started
-    screen = <GameScreen onEndGame={endGame} />;
+    screen = <GameScreen storedName={storedName} onEndGame={endGame} />;
   } else { // no name found in the storage
     screen = <StartScreen onStore={storeName} onGetName={getName} />
   }

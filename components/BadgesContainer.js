@@ -114,6 +114,11 @@ function BadgesContainer({storedName}) {
 
     // TEST functionality
     const addBadge = async () => {
+        // try {
+        //     await AsyncStorage.clear();
+        //     console.log('clear()---------');
+        // } catch (e) {console.log(e);}
+
         let key = playerName + "-researcher";
 
         try {
