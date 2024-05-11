@@ -115,9 +115,9 @@ function HighscoreContainer() {
             </View>);
     }
 
+    // load data for the highscore leaderboard when the component renders
     useEffect(() => {
         getHighscores();
-        console.log('useEffect()');
     }, []);
 
     return(

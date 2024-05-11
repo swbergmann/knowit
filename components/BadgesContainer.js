@@ -119,11 +119,7 @@ function BadgesContainer({storedName}) {
         //     console.log('clear()---------');
         // } catch (e) {console.log(e);}
 
-        let key = playerName + "-researcher";
-
-        try {
-          await AsyncStorage.setItem(key, "true");
-        } catch (e) {console.log(e);}
+        
         getBadges(playerName);
     };
 

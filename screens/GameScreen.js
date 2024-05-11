@@ -9,21 +9,23 @@ import { QUESTIONS } from '../data/game-data';
 import Colors from '../constants/colors';
 
 function GameScreen({storedName, onEndGame}) {
+    const MAXPOINTS = 100; // maximum points available per question
+    const PLAYERNAME = storedName;
+
     const [index, setIndex] = useState(0); // helper to iterate over the QUESTIONS
-    const [countdown, setCountdown] = useState(100); // points for correct answer decrease over time
+    const [countdown, setCountdown] = useState(MAXPOINTS); // points for correct answer decrease over time
     const [score, setScore] = useState(0); // current score of the user
 
-    const playerName = storedName;
-    let playerScore; // place outside function to re-use variable
+    let playerScore; // place outside functions to re-use variable
 
     function submitHandler() { // submit button pressed
         playerScore = score + countdown;
         setScore(playerScore); // update player score
 
-        if (index < 3) { // load next question
+        if (index < (QUESTIONS.length - 1)) { // accessing items in an array starts at 0th element (hence -1)
             let newIndex = index + 1;
             setIndex(newIndex); // renders the next question
-            setCountdown(100); // restart countdown at 100 points
+            setCountdown(MAXPOINTS); // restart countdown at 100 points
         } else { // game ends
             compareScoreWithHighscore();
         }
@@ -69,7 +71,34 @@ function GameScreen({storedName, onEndGame}) {
             }
         } catch (e) {console.log(e);}
 
+        unlockBadges();
         onEndGame(); // gets called AFTER all 'await' async functions and correct data will be displayed on the PlayerScreen!
+    };
+
+    const unlockBadges = async () => {
+        if (playerScore >= (QUESTIONS.length * MAXPOINTS / 100 * 50)) { // player score on average >= 50%
+            let key = PLAYERNAME + "-journalist";
+
+            try {
+              await AsyncStorage.setItem(key, "true");
+            } catch (e) {console.log(e);}
+        }
+
+        if (playerScore >= (QUESTIONS.length * MAXPOINTS / 100 * 70)) { // player score on average >= 70%
+            let key = PLAYERNAME + "-researcher";
+
+            try {
+              await AsyncStorage.setItem(key, "true");
+            } catch (e) {console.log(e);}
+        }
+
+        if (playerScore >= (QUESTIONS.length * MAXPOINTS / 100 * 90)) { // player score on average >= 90%
+            let key = PLAYERNAME + "-historian";
+
+            try {
+              await AsyncStorage.setItem(key, "true");
+            } catch (e) {console.log(e);}
+        }
     };
 
     const storeCurrentPlayerAsFirstPlace = async () => {
@@ -78,7 +107,7 @@ function GameScreen({storedName, onEndGame}) {
         } catch (e) {console.log(e);}
 
         try {
-            await AsyncStorage.setItem('first_name', playerName);
+            await AsyncStorage.setItem('first_name', PLAYERNAME);
         } catch (e) {console.log(e);}
     };
 
@@ -88,7 +117,7 @@ function GameScreen({storedName, onEndGame}) {
         } catch (e) {console.log(e);}
 
         try {
-            await AsyncStorage.setItem('second_name', playerName);
+            await AsyncStorage.setItem('second_name', PLAYERNAME);
         } catch (e) {console.log(e);}
     };
 
@@ -98,7 +127,7 @@ function GameScreen({storedName, onEndGame}) {
         } catch (e) {console.log(e);}
 
         try {
-            await AsyncStorage.setItem('third_name', playerName);
+            await AsyncStorage.setItem('third_name', PLAYERNAME);
         } catch (e) {console.log(e);}
     };
 
