@@ -109,7 +109,7 @@ function HighscoreContainer() {
     if ((highscores.third_score != null) && (highscores.third_name != null)) {
         highscoreThirdPlace = (
             <View style={styles.rowDark}>
-                <SimpleLineIcons name="badge" style={styles.secondPlace} />
+                <SimpleLineIcons name="badge" style={styles.thirdPlace} />
                 <Text style={styles.name}>{highscores.third_name}</Text>
                 <Text style={styles.score}>Score: {highscores.third_score}</Text>
             </View>);

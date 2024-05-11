@@ -11,25 +11,20 @@ import Colors from '../constants/colors';
 function GameScreen({storedName, onEndGame}) {
     const [index, setIndex] = useState(0); // helper to iterate over the QUESTIONS
     const [countdown, setCountdown] = useState(100); // points for correct answer decrease over time
-    const [score, setScore] = useState(0); // stores the current score of the user
+    const [score, setScore] = useState(0); // current score of the user
 
     const playerName = storedName;
-    let newScore; // place outside function to re-use variable
+    let playerScore; // place outside function to re-use variable
 
     function submitHandler() { // submit button pressed
-        newScore = score + countdown;
-        console.log('newScore');
-        console.log(newScore);
-        setScore(newScore); // update player score
-        console.log('score');
-        console.log(score);
+        playerScore = score + countdown;
+        setScore(playerScore); // update player score
 
         if (index < 3) { // load next question
             let newIndex = index + 1;
             setIndex(newIndex); // renders the next question
             setCountdown(100); // restart countdown at 100 points
-        } else { // finish the game
-            console.log('game ends------')
+        } else { // game ends
             compareScoreWithHighscore();
         }
     };
@@ -38,32 +33,122 @@ function GameScreen({storedName, onEndGame}) {
 
         try { // check first place
             let firstScore = await AsyncStorage.getItem('first_score');
-            console.log('firstScore: ' + firstScore);
-            console.log('current score: ' + newScore);
-            if (firstScore == null) { // no score exists
-                storeFirstScoreAndName();
-            } else if (firstScore < newScore) { // current score is better than first place
-                storeFirstScoreAndName();
+
+            if (firstScore == null) { // no score exists (i.e. app just got installed)
+                storeCurrentPlayerAsFirstPlace();
+            } else if (firstScore <= playerScore) { // current score is better than first place
+                // update highscore entries from direction bottom to top
+                moveSecondToThirdPlace();
+                moveFirstToSecondPlace();
+                storeCurrentPlayerAsFirstPlace();
+            } else { // playerScore does not override first place
+                try { // check second place
+                    let secondScore = await AsyncStorage.getItem('second_score');
+        
+                    if (secondScore == null) { // no score exists (i.e. app just got installed)
+                        storeCurrentPlayerAsSecondPlace();
+                    } else if (secondScore <= playerScore) { // current score is better than first place
+                        // update highscore entries from direction bottom to top
+                        moveSecondToThirdPlace();
+                        storeCurrentPlayerAsSecondPlace();
+                    } else { // playerScore does not override second place
+                        try { // check third place
+                            let thirdScore = await AsyncStorage.getItem('third_score');
+                
+                            if (thirdScore == null) { // no score exists (i.e. app just got installed)
+                                storeCurrentPlayerAsThirdPlace();
+                            } else if (thirdScore <= playerScore) { // current score is better than first place
+                                // update highscore entries from direction bottom to top
+                                storeCurrentPlayerAsThirdPlace();
+                            } else { // playerScore does not override any place in the leaderboard
+                                console.log('playerScore does not override any place in the leaderboard');
+                            }
+                        } catch (e) {console.log(e);}
+                    }
+                } catch (e) {console.log(e);}
             }
         } catch (e) {console.log(e);}
-
-        // check secon place
-
-
-        // check third place
 
         onEndGame(); // gets called AFTER all 'await' async functions and correct data will be displayed on the PlayerScreen!
     };
 
-    const storeFirstScoreAndName = async () => {
+    const storeCurrentPlayerAsFirstPlace = async () => {
         try {
-          await AsyncStorage.setItem('first_score', newScore + ''); // append string to cast number to string (necessary for storage)
+          await AsyncStorage.setItem('first_score', playerScore + ''); // append string to cast number to string (necessary for storage)
         } catch (e) {console.log(e);}
 
         try {
             await AsyncStorage.setItem('first_name', playerName);
-          } catch (e) {console.log(e);}
-      };
+        } catch (e) {console.log(e);}
+    };
+
+    const storeCurrentPlayerAsSecondPlace = async () => {
+        try {
+          await AsyncStorage.setItem('second_score', playerScore + ''); // append string to cast number to string (necessary for storage)
+        } catch (e) {console.log(e);}
+
+        try {
+            await AsyncStorage.setItem('second_name', playerName);
+        } catch (e) {console.log(e);}
+    };
+
+    const storeCurrentPlayerAsThirdPlace = async () => {
+        try {
+          await AsyncStorage.setItem('third_score', playerScore + ''); // append string to cast number to string (necessary for storage)
+        } catch (e) {console.log(e);}
+
+        try {
+            await AsyncStorage.setItem('third_name', playerName);
+        } catch (e) {console.log(e);}
+    };
+
+    const moveSecondToThirdPlace = async () => {
+        let secondScore;
+        let secondName;
+
+        try {
+            secondScore = await AsyncStorage.getItem('second_score');
+        } catch (e) {console.log(e);}
+        
+        try {
+            secondName = await AsyncStorage.getItem('second_name');
+        } catch (e) {console.log(e);}
+        
+        if ((secondScore != null) && (secondName != null)) {
+            // set data from second place to third place
+            try {
+                await AsyncStorage.setItem('third_score', secondScore + ''); // append string to cast number to string (necessary for storage)
+            } catch (e) {console.log(e);}
+      
+            try {
+                await AsyncStorage.setItem('third_name', secondName);
+            } catch (e) {console.log(e);}
+        }
+    };
+
+    const moveFirstToSecondPlace = async () => {
+        let firstScore;
+        let firstName;
+
+        try {
+            firstScore = await AsyncStorage.getItem('first_score');
+        } catch (e) {console.log(e);}
+        
+        try {
+            firstName = await AsyncStorage.getItem('first_name');
+        } catch (e) {console.log(e);}
+        
+        if ((firstScore != null) && (firstName != null)) {
+            // set data from first place to second place
+            try {
+                await AsyncStorage.setItem('second_score', firstScore + ''); // append string to cast number to string (necessary for storage)
+            } catch (e) {console.log(e);}
+      
+            try {
+                await AsyncStorage.setItem('second_name', firstName);
+            } catch (e) {console.log(e);}
+        }
+    };
 
     let barWidth = countdown; // assign count here to use it within barInnerStyle()
     
