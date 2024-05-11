@@ -8,27 +8,31 @@ import Colors from '../constants/colors';
 
 function GameScreen({onEndGame}) {
     const [index, setIndex] = useState(0); // helper to iterate over the QUESTIONS
-    const [count, setCount] = useState(100); // points for correct answer decrease over time
+    const [countdown, setCountdown] = useState(100); // points for correct answer decrease over time
+    const [score, setScore] = useState(0); // stores the current score of the user
 
     function submitHandler() { // submit button pressed
         if (index < 1) { // load next question
-            let count = index + 1;
-            setIndex(count);
-            setCount(100);
+            let newIndex = index + 1;
+            let newScore = score + countdown;
+            setScore(newScore); // update player score
+            setIndex(newIndex); // renders the next question
+            setCountdown(100); // restart countdown at 100 points
         } else { // finish the game
+            console.log('game ends------')
             onEndGame();
         }
     };
 
-    let width = count; // assign count here to use it within barInnerStyle()
+    let barWidth = countdown; // assign count here to use it within barInnerStyle()
     
     function barInnerStyle() { // style the time-bar dynamically
         let newColor;
-        let newWidth = width + '%';
+        let newBarWidth = barWidth + '%';
 
-        if (width > 60) {
+        if (barWidth > 60) {
             newColor = 'green';
-        } else if (width > 30) {
+        } else if (barWidth > 30) {
             newColor = Colors.gold;
         } else {
             newColor = 'red';
@@ -36,35 +40,37 @@ function GameScreen({onEndGame}) {
 
         return { // return the dynamic style of the time-bar
             backgroundColor: newColor,
-            width: newWidth
+            width: newBarWidth
         }
     }
 
     useEffect(() => {
-        const timer = count > 0 && setTimeout(() => setCount(count - 1), 1000);
+        const timer = countdown > 0 && setTimeout(() => setCountdown(countdown - 1), 1000);
         return () => clearTimeout(timer); // clear timeout when switching screen to next question
-    }, [count]);
+    }, [countdown]);
 
     return(
         <View style={styles.container}>
             <View style={styles.inner}>
                 <View style={styles.gameContainer}>
-                    <View>
-                        <Text>Points to earn: {count}</Text>
-                        <View style={styles.barOuter}>
-                            <View style={barInnerStyle()}>
-                                <Text></Text>
-                            </View>
+                    <View style={styles.row}>
+                        <Text style={styles.flex1}>Points to earn: {countdown}</Text>
+                        <Text style={styles.flex1}>Your score: {score}</Text>
+                    </View>
+                    <View style={styles.barOuter}>
+                        <View style={barInnerStyle()}>
+                            <Text></Text>
                         </View>
-                        <View>
-                            <Text>TEST</Text>
-                            <Text>{QUESTIONS[index].text}</Text>
-                        </View>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.flex1}>{QUESTIONS[index].title}</Text>
+                    </View>
+                    <View style={styles.row}>
+                        <Text style={styles.flex1}>{QUESTIONS[index].text}</Text>
+                    </View>
                         <View>
                             <Text>{QUESTIONS[index].hint}</Text>
                         </View>
-                    </View>
-
                     <View style={styles.buttonsRow}>
                         <View style={styles.buttonOuterContainer}>
                         <Pressable 
@@ -120,6 +126,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         padding: 20
     },
+    row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 4
+    },
+    flex1: {
+        flex: 1
+    },
     buttonsRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -161,9 +175,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignSelf: 'stretch',
         marginHorizontal: 0,
-        marginVertical: 0,
+        marginVertical: 4,
         padding: 0,
-        maxWidth: '98%',
+        maxWidth: '97%',
+        height: 14,
         overflow: 'hidden',
         backgroundColor: Colors.gray600
     }
