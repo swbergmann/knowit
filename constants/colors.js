@@ -20,7 +20,9 @@ const Colors = {
     button400: '#2c5cc5',
     gold: '#ffd700',
     silver: '#c0c0c0',
-    bronze: '#cd7f32'
+    bronze: '#cd7f32',
+    success: '#2cc776',
+    error: '#f01b4a'
 };
 
 export default Colors;

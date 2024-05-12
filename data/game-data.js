@@ -13,9 +13,14 @@ export const QUESTIONS = [
             answer_3: 'Sydney',
             answer_4: 'Melbourne'
         },
-        ['answer_3', 'answer_4'],
-        ['answer_1', 'answer_2'],
-        [] // no sort order in multiple choice questions
+        {
+            answer_1: true,
+            answer_2: true,
+            answer_3: false,
+            answer_4: false
+        },
+        [], // no sort order in multiple choice questions
+        ['answer_3', 'answer_4']
     ),
     new Question(
         'q2',
@@ -30,8 +35,8 @@ export const QUESTIONS = [
             answer_4: 'Sydney'
         },
         [], // no correct or wrong answers in sorting questions
-        [], // no correct or wrong answers in sorting questions
-        ['answer_4', 'answer_3', 'answer_2', 'answer_1']
+        ['answer_4', 'answer_3', 'answer_2', 'answer_1'],
+        [] // no correct or wrong answers in sorting questions
     ),
     new Question(
         'q3',
@@ -45,9 +50,14 @@ export const QUESTIONS = [
             answer_3: 'Brisbane',
             answer_4: 'Melbourne'
         },
-        ['answer_2', 'answer_4'],
-        ['answer_1', 'answer_3'],
-        [] // no sort order in multiple choice questions
+        {
+            answer_1: true,
+            answer_2: false,
+            answer_3: true,
+            answer_4: false
+        },
+        [], // no sort order in multiple choice questions
+        ['answer_2', 'answer_4']
     ),
     new Question(
         'q4',
@@ -62,7 +72,7 @@ export const QUESTIONS = [
             answer_4: 'University of Queensland'
         },
         [], // no correct or wrong answers in sorting questions
-        [], // no correct or wrong answers in sorting questions
-        ['answer_4', 'answer_3', 'answer_2', 'answer_1']
+        ['answer_4', 'answer_3', 'answer_2', 'answer_1'],
+        [] // no correct or wrong answers in sorting questions
     )
 ];

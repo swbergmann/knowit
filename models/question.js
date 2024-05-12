@@ -6,19 +6,19 @@ class Question {
         text,
         hint,
         answers,
-        joker,
         correctAnswers,
-        correctOrder
+        correctOrder,
+        joker
     ) {
         this.id = id;
         this.type = type;
         this.title = title;
         this.text = text;
         this.hint = hint;
-        this.joker = joker;
         this.answers = answers;
         this.correctAnswers = correctAnswers;
         this.correctOrder = correctOrder;
+        this.joker = joker;
     }
 }
 

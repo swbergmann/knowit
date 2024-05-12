@@ -26,8 +26,8 @@ function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
               <Pressable 
                 style={({pressed}) =>
                   pressed && Platform.OS === 'ios'
-                    ? [styles.buttonInnerContainer, styles.changeNameButton, styles.pressed]
-                    : [styles.buttonInnerContainer, styles.changeNameButton]
+                    ? [styles.buttonInnerLeft, styles.changeNameButton, styles.pressed]
+                    : [styles.buttonInnerLeft, styles.changeNameButton]
                 }
                 onPress={eraseHandler}
                 android_ripple={{color: Colors.button200}}
@@ -39,8 +39,8 @@ function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
               <Pressable 
                 style={({pressed}) =>
                   pressed && Platform.OS === 'ios'
-                    ? [styles.buttonInnerContainer, styles.startGameButton, styles.pressed]
-                    : [styles.buttonInnerContainer, styles.startGameButton]
+                    ? [styles.buttonInnerRight, styles.startGameButton, styles.pressed]
+                    : [styles.buttonInnerRight, styles.startGameButton]
                 }
                 onPress={onStartGame}
                 android_ripple={{color: Colors.button400}}
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     margin: 20,
     borderRadius: 8,
-    marginTop: 110,
+    marginTop: 60,
     marginBottom: 50
   },
   playerContainer: {
@@ -108,6 +108,24 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     borderRadius: 6
+  },
+  buttonInnerLeft: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    borderRadius: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginRight: 15
+  },
+  buttonInnerRight: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'stretch',
+    borderRadius: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    marginLeft: 15
   },
   pressed: {
     opacity: 0.75

@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
     },
     safe: {
       flex: 1,
-      marginTop: 90
+      marginTop: 60
     },
     inner: {
       flex: 1,
@@ -144,14 +144,14 @@ const styles = StyleSheet.create({
       height: 210
     },
     introduction: {
-      fontSize: 22
+      fontSize: Fonts.h3
     },
     knowit: {
       fontSize: Fonts.h1,
       marginVertical: 20
     },
     description: {
-      fontSize: 20,
+      fontSize: Fonts.text,
       color: Colors.gray600
     },
     inputLine: {
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
     },
     input: {
       fontSize: 24,
-      marginHorizontal:24,
+      marginHorizontal: 24,
       width: '100%'
     },
     buttonOuterContainer: {
@@ -194,10 +194,10 @@ const styles = StyleSheet.create({
     },
     buttonText: {
       color: 'white',
-      fontSize: 24
+      fontSize: Fonts.h3
     },
     error: {
       color: 'red',
-      fontSize: 20
+      fontSize: Fonts.text
     }
 });

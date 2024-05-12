@@ -17,22 +17,56 @@ function GameScreen({storedName, onEndGame}) {
     const [countdown, setCountdown] = useState(MAXPOINTS); // points for correct answer decrease over time
     const [score, setScore] = useState(0); // current score of the user
     const [isHintVisible, setIsHintVisible] = useState(false);
+    const [isAnswer1Selected, setIsAnswer1Selected] = useState(false);
+    const [isAnswer2Selected, setIsAnswer2Selected] = useState(false);
+    const [isAnswer3Selected, setIsAnswer3Selected] = useState(false);
+    const [isAnswer4Selected, setIsAnswer4Selected] = useState(false);
 
     let playerScore; // place outside functions to re-use variable
 
     function submitHandler() { // submit button pressed
-        playerScore = score + countdown;
-        setScore(playerScore); // update player score
-        setIsHintVisible(false);
+        // check if answer is correct
+        if (isAnswerCorrect()) { // CORRECT answer
+            playerScore = score + countdown;
+            setScore(playerScore); // update player score
+            setIsHintVisible(false);
 
-        if (index < (QUESTIONS.length - 1)) { // accessing items in an array starts at 0th element (hence -1)
-            let newIndex = index + 1;
-            setIndex(newIndex); // renders the next question
-            setCountdown(MAXPOINTS); // restart countdown at 100 points
-        } else { // game ends
-            compareScoreWithHighscore();
+            if (index < (QUESTIONS.length - 1)) { // accessing items in an array starts at 0th element (hence -1)
+                // deselect all answers
+                setIsAnswer1Selected(false);
+                setIsAnswer2Selected(false);
+                setIsAnswer3Selected(false);
+                setIsAnswer4Selected(false);
+
+                let newIndex = index + 1;
+                setIndex(newIndex); // renders the next question
+                setCountdown(MAXPOINTS); // restart countdown at 100 points
+            } else { // game ends
+                compareScoreWithHighscore();
+            }            
+        } else { // WRONG answer
+            setCountdown(Math.ceil(countdown / 100 * 50)); // this prevents decimals in the countdown
         }
+
+
     };
+
+    function isAnswerCorrect() {
+        let correct = false;
+        let isAnswer1correct = QUESTIONS[index].correctAnswers.answer_1;
+        let isAnswer2correct = QUESTIONS[index].correctAnswers.answer_2;
+        let isAnswer3correct = QUESTIONS[index].correctAnswers.answer_3;
+        let isAnswer4correct = QUESTIONS[index].correctAnswers.answer_4;
+
+        if ((isAnswer1Selected == isAnswer1correct) // are all correct answers selected?
+            && (isAnswer2Selected == isAnswer2correct)
+            && (isAnswer3Selected == isAnswer3correct)
+            && (isAnswer4Selected == isAnswer4correct)) {
+                correct = true; // answer is correct
+        }
+
+        return correct;
+    }
 
     const compareScoreWithHighscore = async () => {
 
@@ -227,8 +261,80 @@ function GameScreen({storedName, onEndGame}) {
     }
 
     function showHint() {
-        setCountdown(countdown / 2)
+        setCountdown(Math.ceil(countdown / 100 * 50)); // this prevents decimals in the countdown
         setIsHintVisible(true);
+    }
+
+    function pressAnswer1() {
+        setIsAnswer1Selected(!isAnswer1Selected);
+    }
+
+    function pressAnswer2() {
+        setIsAnswer2Selected(!isAnswer2Selected);
+    }
+
+    function pressAnswer3() {
+        setIsAnswer3Selected(!isAnswer3Selected);
+    }
+
+    function pressAnswer4() {
+        setIsAnswer4Selected(!isAnswer4Selected);
+    }
+
+    function answer1ButtonStyle() { // style the answer button dynamically
+        let color;
+
+        if (isAnswer1Selected) {
+            color = Colors.gold
+        } else {
+            color = Colors.primary200
+        }
+
+        return { // return the dynamic style of the answer button
+            backgroundColor: color
+        }
+    }
+
+    function answer2ButtonStyle() { // style the answer button dynamically
+        let color;
+
+        if (isAnswer2Selected) {
+            color = Colors.gold
+        } else {
+            color = Colors.primary200
+        }
+
+        return { // return the dynamic style of the answer button
+            backgroundColor: color
+        }
+    }
+
+    function answer3ButtonStyle() { // style the answer button dynamically
+        let color;
+
+        if (isAnswer3Selected) {
+            color = Colors.gold
+        } else {
+            color = Colors.primary200
+        }
+
+        return { // return the dynamic style of the answer button
+            backgroundColor: color
+        }
+    }
+
+    function answer4ButtonStyle() { // style the answer button dynamically
+        let color;
+
+        if (isAnswer4Selected) {
+            color = Colors.gold
+        } else {
+            color = Colors.primary200
+        }
+
+        return { // return the dynamic style of the answer button
+            backgroundColor: color
+        }
     }
 
     useEffect(() => {
@@ -261,21 +367,21 @@ function GameScreen({storedName, onEndGame}) {
                         <Pressable 
                             style={({pressed}) =>
                             pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerContainer, styles.abortGameButton, styles.pressed]
-                                : [styles.buttonInnerContainer, styles.abortGameButton]
+                                ? [styles.buttonInnerLeft, styles.abortGameButton, styles.pressed]
+                                : [styles.buttonInnerLeft, styles.abortGameButton]
                             }
                             onPress={null}
                             android_ripple={{color: Colors.button200}}
                         >
-                            <Text style={styles.buttonText}>50-50</Text>
+                            <Text style={styles.buttonText}>Remove 1</Text>
                         </Pressable>
                         </View>
                         <View style={styles.buttonOuterContainer}>
                         <Pressable 
                             style={({pressed}) =>
                             pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerContainer, hintButtonStyle(), styles.pressed]
-                                : [styles.buttonInnerContainer, hintButtonStyle()]
+                                ? [styles.buttonInnerRight, hintButtonStyle(), styles.pressed]
+                                : [styles.buttonInnerRight, hintButtonStyle()]
                             }
                             onPress={showHint}
                             disabled={isHintVisible}
@@ -287,14 +393,78 @@ function GameScreen({storedName, onEndGame}) {
                     </View>
 
                     {hint}
+
+                    <View style={styles.buttonsRow}>
+                        <View style={styles.buttonOuterContainer}>
+                            <Pressable 
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.answerButtonInnerContainer, answer1ButtonStyle(), styles.pressed]
+                                    : [styles.answerButtonInnerContainer, answer1ButtonStyle()]
+                                }
+                                onPress={pressAnswer1}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}>{QUESTIONS[index].answers.answer_1}</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+
+                    <View style={styles.buttonsRow}>
+                        <View style={styles.buttonOuterContainer}>
+                            <Pressable 
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.answerButtonInnerContainer, answer2ButtonStyle(), styles.pressed]
+                                    : [styles.answerButtonInnerContainer, answer2ButtonStyle()]
+                                }
+                                onPress={pressAnswer2}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}>{QUESTIONS[index].answers.answer_2}</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+
+                    <View style={styles.buttonsRow}>
+                        <View style={styles.buttonOuterContainer}>
+                            <Pressable 
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.answerButtonInnerContainer, answer3ButtonStyle(), styles.pressed]
+                                    : [styles.answerButtonInnerContainer, answer3ButtonStyle()]
+                                }
+                                onPress={pressAnswer3}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}>{QUESTIONS[index].answers.answer_3}</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+
+                    <View style={styles.buttonsRow}>
+                        <View style={styles.buttonOuterContainer}>
+                            <Pressable 
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.answerButtonInnerContainer, answer4ButtonStyle(), styles.pressed]
+                                    : [styles.answerButtonInnerContainer, answer4ButtonStyle()]
+                                }
+                                onPress={pressAnswer4}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}>{QUESTIONS[index].answers.answer_4}</Text>
+                            </Pressable>
+                        </View>
+                    </View>
                     
                     <View style={styles.buttonsRow}>
                         <View style={styles.buttonOuterContainer}>
                         <Pressable 
                             style={({pressed}) =>
                             pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerContainer, styles.abortGameButton, styles.pressed]
-                                : [styles.buttonInnerContainer, styles.abortGameButton]
+                                ? [styles.buttonInnerLeft, styles.abortGameButton, styles.pressed]
+                                : [styles.buttonInnerLeft, styles.abortGameButton]
                             }
                             onPress={onEndGame}
                             android_ripple={{color: Colors.button200}}
@@ -306,10 +476,12 @@ function GameScreen({storedName, onEndGame}) {
                         <Pressable 
                             style={({pressed}) =>
                             pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerContainer, styles.submitAnswerButton, styles.pressed]
-                                : [styles.buttonInnerContainer, styles.submitAnswerButton]
+                                ? [styles.buttonInnerRight, styles.submitAnswerButton, styles.pressed]
+                                : [styles.buttonInnerRight, styles.submitAnswerButton]
                             }
                             onPress={submitHandler}
+                            // check if answer is correct
+
                             android_ripple={{color: Colors.button400}}
                         >
                             <Text style={styles.buttonText}>Submit</Text>
@@ -334,7 +506,7 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         margin: 20,
         borderRadius: 8,
-        marginTop: 110,
+        marginTop: 60,
         marginBottom: 50
     },
     gameContainer: {
@@ -371,11 +543,28 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         overflow: 'hidden'
       },
-    buttonInnerContainer: {
-        width: 120,
+    buttonInnerLeft: {
         alignItems: 'center',
         justifyContent: 'center',
-        alignSelf: 'center',
+        alignSelf: 'stretch',
+        borderRadius: 6,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        marginRight: 15
+    },
+    buttonInnerRight: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'stretch',
+        borderRadius: 6,
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        marginLeft: 15
+    },
+    answerButtonInnerContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'stretch',
         paddingVertical: 8,
         paddingHorizontal: 12,
         borderRadius: 6
