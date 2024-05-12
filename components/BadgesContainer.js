@@ -155,6 +155,7 @@ export default BadgesContainer;
 
 const styles = StyleSheet.create({
     row: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 8
@@ -166,9 +167,9 @@ const styles = StyleSheet.create({
         flex: 4,
         alignItems: 'center',
         backgroundColor: 'white',
+        padding: 20,
         borderBottomWidth: 2,
-        borderBottomColor: Colors.gray400,
-        padding: 20
+        borderBottomColor: Colors.gray400
     },
     badgeIcon: {
         fontSize: 30,

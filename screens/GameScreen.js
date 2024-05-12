@@ -186,10 +186,12 @@ function GameScreen({storedName, onEndGame}) {
         let newColor;
         let newBarWidth = barWidth + '%';
 
-        if (barWidth > 60) {
+        if (barWidth > 90) {
             newColor = 'green';
-        } else if (barWidth > 30) {
+        } else if (barWidth > 70) {
             newColor = Colors.gold;
+        } else if (barWidth > 40) {
+            newColor = 'orange';
         } else {
             newColor = 'red';
         }
@@ -212,14 +214,14 @@ function GameScreen({storedName, onEndGame}) {
                     <View style={[styles.row, styles.rowTitle]}>
                         <Text style={[styles.flex1, styles.title]}>{QUESTIONS[index].title}</Text>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.flex1}>Points: {countdown}</Text>
-                        <Text style={styles.flex1}>Your score: {score}</Text>
-                    </View>
                     <View style={styles.barOuter}>
                         <View style={barInnerStyle()}>
                             <Text></Text>
                         </View>
+                    </View>
+                    <View style={[styles.row, styles.borderBottom]}>
+                        <Text style={styles.flex1}>Points: {countdown}</Text>
+                        <Text style={styles.flex1}>Your Score: {score}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.flex1}>{QUESTIONS[index].text}</Text>
@@ -291,6 +293,11 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 18
     },
+    borderBottom: {
+        paddingBottom: 8,
+        borderBottomWidth: 2,
+        borderBottomColor: Colors.gray400
+    },
     buttonsRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -337,11 +344,10 @@ const styles = StyleSheet.create({
         maxWidth: '97%',
         height: 14,
         overflow: 'hidden',
-        backgroundColor: Colors.gray600
+        backgroundColor: Colors.gray500
     },
     rowTitle: {
-        alignSelf: 'center',
-        // flexDirection: 'column'
+        alignSelf: 'center'
     },
     title: {
         fontSize: Fonts.h1
