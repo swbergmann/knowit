@@ -4,6 +4,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import Colors from '../constants/colors';
 import BadgesContainer from '../components/BadgesContainer';
 import HighscoreContainer from '../components/HighscoreContainer';
+import Fonts from '../constants/fonts';
 
 function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
 
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     color: 'black'
   },
   playerName: {
-    fontSize: 36,
+    fontSize: Fonts.h1,
     marginLeft: 12
   },
   buttonOuterContainer: {
@@ -120,6 +121,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontSize: 24
+    fontSize: Fonts.h3
   }
 });

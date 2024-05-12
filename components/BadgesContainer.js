@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 import Colors from '../constants/colors';
+import Fonts from '../constants/fonts';
 
 function BadgesContainer({storedName}) {
     /* assign storedName to const 
@@ -132,7 +133,7 @@ function BadgesContainer({storedName}) {
     return(
         <View style={styles.badgesContainer}>
             <View style={styles.row}>
-                <Text style={styles.introduction}>Play the game to unlock badges.</Text>
+                <Text style={styles.badges}>Badges</Text>
             </View>
             <View style={styles.row}>
                 {historian}
@@ -143,9 +144,9 @@ function BadgesContainer({storedName}) {
             <View style={styles.row}>
                 {journalist}
             </View>
-            <Pressable onPress={addBadge}>
+            {/* <Pressable onPress={addBadge}>
                 <Text>Test</Text>
-            </Pressable>
+            </Pressable> */}
         </View>
     );
 }
@@ -154,36 +155,39 @@ export default BadgesContainer;
 
 const styles = StyleSheet.create({
     row: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: 8
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 8
     },
     introduction: {
-      fontSize: 20
+        fontSize: Fonts.text
     },
     badgesContainer: {
-      flex: 4,
-      alignItems: 'center',
-      backgroundColor: 'white',
-      borderBottomWidth: 2,
-      borderBottomColor: Colors.gray400,
-      padding: 20
+        flex: 4,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderBottomWidth: 2,
+        borderBottomColor: Colors.gray400,
+        padding: 20
     },
     badgeIcon: {
-      fontSize: 30,
-      color: Colors.gray400
+        fontSize: 30,
+        color: Colors.gray400
     },
     badgeIconUnlocked: {
         fontSize: 30,
         color: Colors.gold
     },
     badgeText: {
-      fontSize: 24,
-      marginHorizontal: 20,
-      color: Colors.gray400
+        fontSize: Fonts.h3,
+        marginHorizontal: 20,
+        color: Colors.gray400
     },
     badgeTextUnlocked: {
-      fontSize: 24,
-      marginHorizontal: 20
+        fontSize: Fonts.h3,
+        marginHorizontal: 20
+    },
+    badges: {
+        fontSize: Fonts.h3
     }
   });

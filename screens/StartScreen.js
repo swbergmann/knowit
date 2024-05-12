@@ -3,6 +3,7 @@ import { StyleSheet, Text, TextInput, View, Image, Pressable, Keyboard, Keyboard
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 import Colors from '../constants/colors';
+import Fonts from '../constants/fonts';
 
 // use object-destructuring to automatically pull out these props from the incoming props object
 function StartScreen({onStore, onGetName}) {
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
       fontSize: 22
     },
     knowit: {
-      fontSize: 36,
+      fontSize: Fonts.h1,
       marginVertical: 20
     },
     description: {
@@ -181,11 +182,12 @@ const styles = StyleSheet.create({
       marginTop: 85
     },
     buttonInnerContainer: {
+      width: 120,
       backgroundColor: Colors.primary200,
       alignItems: 'center',
       justifyContent: 'center',
-      paddingVertical: 12,
-      paddingHorizontal: 32
+      paddingVertical: 8,
+      paddingHorizontal: 12
     },
     pressed: {
       opacity: 0.75

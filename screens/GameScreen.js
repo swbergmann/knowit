@@ -7,6 +7,7 @@ import { StyleSheet, View, Text, Pressable, Platform } from 'react-native';
 import { QUESTIONS } from '../data/game-data';
 
 import Colors from '../constants/colors';
+import Fonts from '../constants/fonts';
 
 function GameScreen({storedName, onEndGame}) {
     const MAXPOINTS = 100; // maximum points available per question
@@ -208,8 +209,11 @@ function GameScreen({storedName, onEndGame}) {
         <View style={styles.container}>
             <View style={styles.inner}>
                 <View style={styles.gameContainer}>
+                    <View style={[styles.row, styles.rowTitle]}>
+                        <Text style={[styles.flex1, styles.title]}>{QUESTIONS[index].title}</Text>
+                    </View>
                     <View style={styles.row}>
-                        <Text style={styles.flex1}>Points to earn: {countdown}</Text>
+                        <Text style={styles.flex1}>Points: {countdown}</Text>
                         <Text style={styles.flex1}>Your score: {score}</Text>
                     </View>
                     <View style={styles.barOuter}>
@@ -218,14 +222,11 @@ function GameScreen({storedName, onEndGame}) {
                         </View>
                     </View>
                     <View style={styles.row}>
-                        <Text style={styles.flex1}>{QUESTIONS[index].title}</Text>
-                    </View>
-                    <View style={styles.row}>
                         <Text style={styles.flex1}>{QUESTIONS[index].text}</Text>
                     </View>
-                        <View>
-                            <Text>{QUESTIONS[index].hint}</Text>
-                        </View>
+                    <View style={styles.row}>
+                        <Text style={styles.flex1}>{QUESTIONS[index].hint}</Text>
+                    </View>
                     <View style={styles.buttonsRow}>
                         <View style={styles.buttonOuterContainer}>
                         <Pressable 
@@ -287,7 +288,8 @@ const styles = StyleSheet.create({
         marginVertical: 4
     },
     flex1: {
-        flex: 1
+        flex: 1,
+        fontSize: 18
     },
     buttonsRow: {
         flexDirection: 'row',
@@ -319,7 +321,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: 'white',
-        fontSize: 24
+        fontSize: Fonts.h3
     },
     barOuter: {
         flexDirection: 'row',
@@ -336,5 +338,12 @@ const styles = StyleSheet.create({
         height: 14,
         overflow: 'hidden',
         backgroundColor: Colors.gray600
+    },
+    rowTitle: {
+        alignSelf: 'center',
+        // flexDirection: 'column'
+    },
+    title: {
+        fontSize: Fonts.h1
     }
 });

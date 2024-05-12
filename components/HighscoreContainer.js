@@ -5,6 +5,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 import Colors from '../constants/colors';
+import Fonts from '../constants/fonts';
 
 function HighscoreContainer() {
     const [highscores, setHighscores] = useState({});
@@ -93,8 +94,13 @@ function HighscoreContainer() {
                 <Text style={styles.score}>Score: {highscores.first_score}</Text>
             </View>);
     } else {
-        // if no highscore exists, append this text to the heading
-        noHighscoresMessage = "not available. Play the game to create the first highscore.";
+        // no highscore exists
+        noHighscoresMessage = "Not available. Play the game to create the first highscore.";
+        highscoreFirstPlace = (
+            <View style={styles.row}>
+                <Text style={styles.description}>{noHighscoresMessage}</Text>
+            </View>
+        )
     }
 
     if ((highscores.second_score != null) && (highscores.second_name != null)) {
@@ -123,7 +129,7 @@ function HighscoreContainer() {
     return(
         <View style={styles.highscoreContainer}>
             <View style={styles.row}>
-                <Text style={styles.heading}>Highscore Leaderboard {noHighscoresMessage}</Text>
+                <Text style={styles.leaderboard}>Leaderboard</Text>
             </View>
             {highscoreFirstPlace}
             {highscoreSecondPlace}
@@ -153,28 +159,28 @@ const styles = StyleSheet.create({
     firstPlace: {
       flex: 1,
       paddingHorizontal: 12,
-      fontSize: 30,
+      fontSize: Fonts.h2,
       color: Colors.gold
     },
     secondPlace: {
       flex: 1,
       paddingHorizontal: 12,
-      fontSize: 30,
+      fontSize: Fonts.h2,
       color: Colors.silver
     },
     thirdPlace: {
       flex: 1,
       paddingHorizontal: 12,
-      fontSize: 30,
+      fontSize: Fonts.h2,
       color: Colors.bronze
     },
     name: {
       flex: 5,
-      fontSize: 20
+      fontSize: Fonts.text
     },
     score: {
       flex: 4,
-      fontSize: 20
+      fontSize: Fonts.text
     },
     highscoreContainer: {
       flex: 4,
@@ -182,7 +188,10 @@ const styles = StyleSheet.create({
       backgroundColor: 'white',
       padding: 20
     },
-    heading: {
-      fontSize: 20
+    leaderboard: {
+      fontSize: Fonts.h3
+    },
+    description: {
+        fontSize: Fonts.text
     }
   });
