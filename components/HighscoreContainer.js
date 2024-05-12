@@ -10,8 +10,6 @@ import Fonts from '../constants/fonts';
 function HighscoreContainer() {
     const [highscores, setHighscores] = useState({});
 
-    console.log('HighscoreContainer');
-
     /**
     * Every time a game finishes, we try to store the score of the player into the AsyncStorage
     * We check the current score against the keys "first_score", then "second_score", then "third_score"
@@ -33,8 +31,6 @@ function HighscoreContainer() {
 
         try {
             let firstScore = await AsyncStorage.getItem('first_score');
-            console.log('getHighscores firstScore');
-            console.log(firstScore);
 
             if (firstScore != null) {
                 scores.first_score = firstScore;

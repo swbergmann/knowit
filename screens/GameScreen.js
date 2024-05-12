@@ -52,7 +52,7 @@ function GameScreen({storedName, onEndGame}) {
     };
 
     function isAnswerCorrect() {
-        let correct = false;
+        let isCorrect = false;
         let isAnswer1correct = QUESTIONS[index].correctAnswers.answer_1;
         let isAnswer2correct = QUESTIONS[index].correctAnswers.answer_2;
         let isAnswer3correct = QUESTIONS[index].correctAnswers.answer_3;
@@ -62,10 +62,10 @@ function GameScreen({storedName, onEndGame}) {
             && (isAnswer2Selected == isAnswer2correct)
             && (isAnswer3Selected == isAnswer3correct)
             && (isAnswer4Selected == isAnswer4correct)) {
-                correct = true; // answer is correct
+                isCorrect = true; // answer is correct
         }
-
-        return correct;
+        console.log('is answer correct? ---> ' + isCorrect);
+        return isCorrect;
     }
 
     const compareScoreWithHighscore = async () => {
@@ -456,6 +456,10 @@ function GameScreen({storedName, onEndGame}) {
                                 <Text style={styles.buttonText}>{QUESTIONS[index].answers.answer_4}</Text>
                             </Pressable>
                         </View>
+                    </View>
+
+                    <View style={styles.row}>
+                        <Text style={styles.flex1}>Select at least one answer to proceed.</Text>
                     </View>
                     
                     <View style={styles.buttonsRow}>
