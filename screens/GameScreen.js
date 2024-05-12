@@ -16,12 +16,14 @@ function GameScreen({storedName, onEndGame}) {
     const [index, setIndex] = useState(0); // helper to iterate over the QUESTIONS
     const [countdown, setCountdown] = useState(MAXPOINTS); // points for correct answer decrease over time
     const [score, setScore] = useState(0); // current score of the user
+    const [isHintVisible, setIsHintVisible] = useState(false);
 
     let playerScore; // place outside functions to re-use variable
 
     function submitHandler() { // submit button pressed
         playerScore = score + countdown;
         setScore(playerScore); // update player score
+        setIsHintVisible(false);
 
         if (index < (QUESTIONS.length - 1)) { // accessing items in an array starts at 0th element (hence -1)
             let newIndex = index + 1;
@@ -202,6 +204,33 @@ function GameScreen({storedName, onEndGame}) {
         }
     }
 
+    function hintButtonStyle() { // style the time-bar dynamically
+        let color;
+
+        if (isHintVisible) {
+            color = Colors.gray400
+        } else {
+            color = Colors.button100
+        }
+
+        return { // return the dynamic style of the time-bar
+            backgroundColor: color
+        }
+    }
+
+    let hint = <View></View>;
+    if (isHintVisible) {
+        hint = (
+            <View style={styles.row}>
+                <Text style={styles.flex1}>{QUESTIONS[index].hint}</Text>
+            </View>);
+    }
+
+    function showHint() {
+        setCountdown(countdown / 2)
+        setIsHintVisible(true);
+    }
+
     useEffect(() => {
         const timer = countdown > 0 && setTimeout(() => setCountdown(countdown - 1), 1000);
         return () => clearTimeout(timer); // clear timeout when switching screen to next question
@@ -220,15 +249,45 @@ function GameScreen({storedName, onEndGame}) {
                         </View>
                     </View>
                     <View style={[styles.row, styles.borderBottom]}>
-                        <Text style={styles.flex1}>Points: {countdown}</Text>
-                        <Text style={styles.flex1}>Your Score: {score}</Text>
+                        <Text style={[styles.flex1, styles.text]}>Points: {countdown}</Text>
+                        <Text style={[styles.flex1, styles.text]}>Your Score: {score}</Text>
                     </View>
                     <View style={styles.row}>
                         <Text style={styles.flex1}>{QUESTIONS[index].text}</Text>
                     </View>
-                    <View style={styles.row}>
-                        <Text style={styles.flex1}>{QUESTIONS[index].hint}</Text>
+
+                    <View style={styles.buttonsRow}>
+                        <View style={styles.buttonOuterContainer}>
+                        <Pressable 
+                            style={({pressed}) =>
+                            pressed && Platform.OS === 'ios'
+                                ? [styles.buttonInnerContainer, styles.abortGameButton, styles.pressed]
+                                : [styles.buttonInnerContainer, styles.abortGameButton]
+                            }
+                            onPress={null}
+                            android_ripple={{color: Colors.button200}}
+                        >
+                            <Text style={styles.buttonText}>50-50</Text>
+                        </Pressable>
+                        </View>
+                        <View style={styles.buttonOuterContainer}>
+                        <Pressable 
+                            style={({pressed}) =>
+                            pressed && Platform.OS === 'ios'
+                                ? [styles.buttonInnerContainer, hintButtonStyle(), styles.pressed]
+                                : [styles.buttonInnerContainer, hintButtonStyle()]
+                            }
+                            onPress={showHint}
+                            disabled={isHintVisible}
+                            android_ripple={{color: Colors.button400}}
+                        >
+                            <Text style={styles.buttonText}>Hint</Text>
+                        </Pressable>
+                        </View>
                     </View>
+
+                    {hint}
+                    
                     <View style={styles.buttonsRow}>
                         <View style={styles.buttonOuterContainer}>
                         <Pressable 
@@ -293,10 +352,14 @@ const styles = StyleSheet.create({
         flex: 1,
         fontSize: 18
     },
+    text: {
+        fontSize: Fonts.text
+    },
     borderBottom: {
         paddingBottom: 8,
         borderBottomWidth: 2,
-        borderBottomColor: Colors.gray400
+        borderBottomColor: Colors.gray400,
+        fontSize: Fonts.h2
     },
     buttonsRow: {
         flexDirection: 'row',
