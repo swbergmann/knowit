@@ -21,6 +21,8 @@ function GameScreen({storedName, onEndGame}) {
     const [isAnswer2Selected, setIsAnswer2Selected] = useState(false);
     const [isAnswer3Selected, setIsAnswer3Selected] = useState(false);
     const [isAnswer4Selected, setIsAnswer4Selected] = useState(false);
+    const [feedback, setFeedback] = useState({});
+
 
     let playerScore; // place outside functions to re-use variable
 
@@ -337,10 +339,41 @@ function GameScreen({storedName, onEndGame}) {
         }
     }
 
+    function submitButtonStyle() { // style the answer button dynamically
+        let color;
+
+        if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected) {
+            color = Colors.gray400;
+        } else {
+            color = Colors.button300;
+        }
+
+        return { // return the dynamic style of the answer button
+            backgroundColor: color
+        }
+    }
+
+    const provideUserFeedback = () => {
+        let feedback = {};
+    
+        if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected) { // validate name field
+            feedback.name = 'Select an answer to proceed.';
+        } else {
+            feedback.name = 'If you are confident, press submit.';
+        }
+    
+        setFeedback(feedback);
+        // setIsFormValid(Object.keys(errors).length === 0); // form is only valid if 0 errors occur
+      }
+
     useEffect(() => {
         const timer = countdown > 0 && setTimeout(() => setCountdown(countdown - 1), 1000);
         return () => clearTimeout(timer); // clear timeout when switching screen to next question
     }, [countdown]);
+
+    useEffect(() => {
+        provideUserFeedback();
+    }, [isAnswer1Selected, isAnswer2Selected, isAnswer3Selected, isAnswer4Selected])
 
     return(
         <View style={styles.container}>
@@ -458,9 +491,16 @@ function GameScreen({storedName, onEndGame}) {
                         </View>
                     </View>
 
-                    <View style={styles.row}>
-                        <Text style={styles.flex1}>Select at least one answer to proceed.</Text>
-                    </View>
+                    {/* show errors only when they exist */}
+                    {Object.values(feedback).map((message, index) => (
+                    <Text key={index} style={styles.message}>
+                        {message}
+                    </Text>
+                    ))}
+
+                    {/* <View style={styles.row}>
+                        <Text style={styles.flex1}></Text>
+                    </View> */}
                     
                     <View style={styles.buttonsRow}>
                         <View style={styles.buttonOuterContainer}>
@@ -480,10 +520,11 @@ function GameScreen({storedName, onEndGame}) {
                         <Pressable 
                             style={({pressed}) =>
                             pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerRight, styles.submitAnswerButton, styles.pressed]
-                                : [styles.buttonInnerRight, styles.submitAnswerButton]
+                                ? [styles.buttonInnerRight, submitButtonStyle(), styles.pressed]
+                                : [styles.buttonInnerRight, submitButtonStyle()]
                             }
                             onPress={submitHandler}
+                            disabled={!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected}
                             // check if answer is correct
 
                             android_ripple={{color: Colors.button400}}
@@ -578,9 +619,6 @@ const styles = StyleSheet.create({
     },
     abortGameButton: {
         backgroundColor: Colors.button100
-    },
-    submitAnswerButton: {
-        backgroundColor: Colors.button300
     },
     buttonText: {
         color: 'white',
