@@ -16,17 +16,21 @@ function GameScreen({storedName, onEndGame}) {
     const [index, setIndex] = useState(0); // helper to iterate over the QUESTIONS
     const [countdown, setCountdown] = useState(MAXPOINTS); // points for correct answer decrease over time
     const [score, setScore] = useState(0); // current score of the user
-    const [isHintVisible, setIsHintVisible] = useState(false);
+    const [isHintVisible, setIsHintVisible] = useState(false); // hint button
     const [isAnswer1Selected, setIsAnswer1Selected] = useState(false);
     const [isAnswer2Selected, setIsAnswer2Selected] = useState(false);
     const [isAnswer3Selected, setIsAnswer3Selected] = useState(false);
     const [isAnswer4Selected, setIsAnswer4Selected] = useState(false);
-    const [feedback, setFeedback] = useState({});
+    const [feedback, setFeedback] = useState({}); // immediate user feedback
+    const [submitDisabledAfterPress, setSubmitDisabledAfterPress] = useState(false); // if submitted answer is wrong the submit button gets diabled
 
 
     let playerScore; // place outside functions to re-use variable
 
     function submitHandler() { // submit button pressed
+        setSubmitDisabledAfterPress(true);
+        console.log('submitDisabledAfterPress ' + submitDisabledAfterPress);
+
         // check if answer is correct
         if (isAnswerCorrect()) { // CORRECT answer
             playerScore = score + countdown;
@@ -269,18 +273,22 @@ function GameScreen({storedName, onEndGame}) {
 
     function pressAnswer1() {
         setIsAnswer1Selected(!isAnswer1Selected);
+        setSubmitDisabledAfterPress(false);
     }
 
     function pressAnswer2() {
         setIsAnswer2Selected(!isAnswer2Selected);
+        setSubmitDisabledAfterPress(false);
     }
 
     function pressAnswer3() {
         setIsAnswer3Selected(!isAnswer3Selected);
+        setSubmitDisabledAfterPress(false);
     }
 
     function pressAnswer4() {
         setIsAnswer4Selected(!isAnswer4Selected);
+        setSubmitDisabledAfterPress(false);
     }
 
     function answer1ButtonStyle() { // style the answer button dynamically
@@ -342,7 +350,7 @@ function GameScreen({storedName, onEndGame}) {
     function submitButtonStyle() { // style the answer button dynamically
         let color;
 
-        if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected) {
+        if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected || submitDisabledAfterPress) {
             color = Colors.gray400;
         } else {
             color = Colors.button300;
@@ -354,12 +362,17 @@ function GameScreen({storedName, onEndGame}) {
     }
 
     const provideUserFeedback = () => {
+
+        console.log('provideUserFeedback');
+        console.log(submitDisabledAfterPress);
         let feedback = {};
     
         if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected) { // validate name field
-            feedback.name = 'Select an answer to proceed.';
+            feedback.message = 'Select an answer to proceed.';
+        } else if (submitDisabledAfterPress) {
+            feedback.message = 'Incorrect answer.';
         } else {
-            feedback.name = 'If you are confident, press submit.';
+            feedback.message = 'If you are confident, press submit.';
         }
     
         setFeedback(feedback);
@@ -371,9 +384,10 @@ function GameScreen({storedName, onEndGame}) {
         return () => clearTimeout(timer); // clear timeout when switching screen to next question
     }, [countdown]);
 
+    // update the user feedback on every selection of an answer OR on pressing submit
     useEffect(() => {
         provideUserFeedback();
-    }, [isAnswer1Selected, isAnswer2Selected, isAnswer3Selected, isAnswer4Selected])
+    }, [isAnswer1Selected, isAnswer2Selected, isAnswer3Selected, isAnswer4Selected, submitDisabledAfterPress])
 
     return(
         <View style={styles.container}>
@@ -397,17 +411,7 @@ function GameScreen({storedName, onEndGame}) {
 
                     <View style={styles.buttonsRow}>
                         <View style={styles.buttonOuterContainer}>
-                        <Pressable 
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerLeft, styles.abortGameButton, styles.pressed]
-                                : [styles.buttonInnerLeft, styles.abortGameButton]
-                            }
-                            onPress={null}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}>Remove 1</Text>
-                        </Pressable>
+                            
                         </View>
                         <View style={styles.buttonOuterContainer}>
                         <Pressable 
@@ -493,7 +497,7 @@ function GameScreen({storedName, onEndGame}) {
 
                     {/* show errors only when they exist */}
                     {Object.values(feedback).map((message, index) => (
-                    <Text key={index} style={styles.message}>
+                    <Text key={index} style={styles.flex1}>
                         {message}
                     </Text>
                     ))}
@@ -524,7 +528,7 @@ function GameScreen({storedName, onEndGame}) {
                                 : [styles.buttonInnerRight, submitButtonStyle()]
                             }
                             onPress={submitHandler}
-                            disabled={!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected}
+                            disabled={!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected || submitDisabledAfterPress}
                             // check if answer is correct
 
                             android_ripple={{color: Colors.button400}}
