@@ -7,8 +7,7 @@ class Question {
         hint,
         answers,
         correctAnswers,
-        correctOrder,
-        joker
+        correctOrder
     ) {
         this.id = id;
         this.type = type;
@@ -18,7 +17,6 @@ class Question {
         this.answers = answers;
         this.correctAnswers = correctAnswers;
         this.correctOrder = correctOrder;
-        this.joker = joker;
     }
 }
 

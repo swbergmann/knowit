@@ -318,7 +318,7 @@ function GameScreen({storedName, onEndGame}) {
     }
 
     function showHint() {
-        setCountdown(Math.ceil(countdown / 100 * 50)); // this prevents decimals in the countdown
+        setCountdown(Math.ceil(countdown / 100 * 75)); // this prevents decimals in the countdown
         setIsHintVisible(true);
     }
 
@@ -436,13 +436,13 @@ function GameScreen({storedName, onEndGame}) {
         let feedback = {};
     
         if (isQuestionSortable && !isSubmitDiabledAfterPressForSortable) {
-            feedback.message = 'Sortable. If you are confident, press submit.';
+            feedback.message = 'If you are confident, press submit.';
         } else if (isQuestionSortable && isSubmitDiabledAfterPressForSortable) {
-            feedback.message = 'Sortable. Incorrect answer.';
+            feedback.message = 'Incorrect answer. Try again!';
         } else if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected) { // validate name field
             feedback.message = 'Select an answer to proceed.';
         } else if (isSubmitDisabledAfterPressForMultiselect) {
-            feedback.message = 'Incorrect answer.';
+            feedback.message = 'Incorrect answer. Try again!';
         } else {
             feedback.message = 'If you are confident, press submit.';
         }
