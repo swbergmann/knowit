@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { FontAwesome } from '@expo/vector-icons';
 
-import { StyleSheet, View, Text, Pressable, Platform } from 'react-native';
+import { StyleSheet, View, Text, Pressable, Platform, SafeAreaView, ScrollView } from 'react-native';
 
 // loads an array of question objects from the game-data.js file
 import { QUESTIONS } from '../data/game-data';
@@ -717,88 +717,90 @@ function GameScreen({storedName, onEndGame}) {
         isSubmitDiabledAfterPressForSortable]);
 
     return(
-        <View style={styles.container}>
-            <View style={styles.inner}>
-                <View style={styles.gameContainer}>
-                    <View style={[styles.row, styles.rowTitle]}>
-                        <Text style={[styles.flex1, styles.title]}>{QUESTIONS[index].title}</Text>
-                    </View>
-                    <View style={styles.barOuter}>
-                        <View style={barInnerStyle()}>
-                            <Text></Text>
+        <SafeAreaView style={styles.container}>
+            <ScrollView>
+                <View style={styles.inner}>
+                    <View style={styles.gameContainer}>
+                        <View style={[styles.row, styles.rowTitle]}>
+                            <Text style={[styles.flex1, styles.title]}>{QUESTIONS[index].title}</Text>
                         </View>
-                    </View>
-                    <View style={[styles.row, styles.borderBottom]}>
-                        <Text style={[styles.flex1, styles.text]}>Points: {countdown}</Text>
-                        <Text style={[styles.flex1, styles.text]}>Your Score: {score}</Text>
-                    </View>
-                    <View style={styles.row}>
-                        <Text style={styles.flex1}>{QUESTIONS[index].text}</Text>
-                    </View>
-
-                    <View style={styles.buttonsRow}>
-                        <View style={styles.buttonOuterContainer}>
-                            
+                        <View style={styles.barOuter}>
+                            <View style={barInnerStyle()}>
+                                <Text></Text>
+                            </View>
                         </View>
-                        <View style={styles.buttonOuterContainer}>
-                        <Pressable 
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerRight, hintButtonStyle(), styles.pressed]
-                                : [styles.buttonInnerRight, hintButtonStyle()]
-                            }
-                            onPress={showHint}
-                            disabled={isHintVisible}
-                            android_ripple={{color: Colors.button400}}
-                        >
-                            <Text style={styles.buttonText}>Hint</Text>
-                        </Pressable>
+                        <View style={[styles.row, styles.borderBottom]}>
+                            <Text style={[styles.flex1, styles.text]}>Points: {countdown}</Text>
+                            <Text style={[styles.flex1, styles.text]}>Your Score: {score}</Text>
                         </View>
-                    </View>
-
-                    {hint}
-
-                    {listOfAnswers}
-
-                    {/* interactive feedback */}
-                    {Object.values(feedback).map((message, index) => (
-                    <Text key={index} style={styles.flex1}>
-                        {message}
-                    </Text>
-                    ))}
-                    
-                    <View style={styles.buttonsRow}>
-                        <View style={styles.buttonOuterContainer}>
-                        <Pressable 
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerLeft, styles.abortGameButton, styles.pressed]
-                                : [styles.buttonInnerLeft, styles.abortGameButton]
-                            }
-                            onPress={onEndGame}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}>Abort</Text>
-                        </Pressable>
+                        <View style={styles.row}>
+                            <Text style={styles.flex1}>{QUESTIONS[index].text}</Text>
                         </View>
-                        <View style={styles.buttonOuterContainer}>
-                        <Pressable 
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.buttonInnerRight, submitButtonStyle(), styles.pressed]
-                                : [styles.buttonInnerRight, submitButtonStyle()]
-                            }
-                            onPress={submitHandler}
-                            disabled={isSubmitButtonDisbled()}
-                            android_ripple={{color: Colors.button400}}
-                        >
-                            <Text style={styles.buttonText}>Submit</Text>
-                        </Pressable>
+
+                        <View style={styles.buttonsRow}>
+                            <View style={styles.buttonOuterContainer}>
+                                
+                            </View>
+                            <View style={styles.buttonOuterContainer}>
+                            <Pressable 
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.buttonInnerRight, hintButtonStyle(), styles.pressed]
+                                    : [styles.buttonInnerRight, hintButtonStyle()]
+                                }
+                                onPress={showHint}
+                                disabled={isHintVisible}
+                                android_ripple={{color: Colors.button400}}
+                            >
+                                <Text style={styles.buttonText}>Hint</Text>
+                            </Pressable>
+                            </View>
+                        </View>
+
+                        {hint}
+
+                        {listOfAnswers}
+
+                        {/* interactive feedback */}
+                        {Object.values(feedback).map((message, index) => (
+                        <Text key={index} style={styles.flex1}>
+                            {message}
+                        </Text>
+                        ))}
+                        
+                        <View style={styles.buttonsRow}>
+                            <View style={styles.buttonOuterContainer}>
+                            <Pressable 
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.buttonInnerLeft, styles.abortGameButton, styles.pressed]
+                                    : [styles.buttonInnerLeft, styles.abortGameButton]
+                                }
+                                onPress={onEndGame}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}>Abort</Text>
+                            </Pressable>
+                            </View>
+                            <View style={styles.buttonOuterContainer}>
+                            <Pressable 
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.buttonInnerRight, submitButtonStyle(), styles.pressed]
+                                    : [styles.buttonInnerRight, submitButtonStyle()]
+                                }
+                                onPress={submitHandler}
+                                disabled={isSubmitButtonDisbled()}
+                                android_ripple={{color: Colors.button400}}
+                            >
+                                <Text style={styles.buttonText}>Submit</Text>
+                            </Pressable>
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
-        </View>
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 
@@ -815,7 +817,7 @@ const styles = StyleSheet.create({
         margin: 20,
         borderRadius: 8,
         marginTop: 60,
-        marginBottom: 50
+        // marginBottom: 50
     },
     gameContainer: {
         flex: 1,
