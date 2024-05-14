@@ -13,7 +13,7 @@ export const QUESTIONS = [
             answer_3: 'Sydney',
             answer_4: 'Melbourne'
         },
-        {
+        {   // correct answers are true
             answer_1: true,
             answer_2: true,
             answer_3: false,
@@ -24,7 +24,7 @@ export const QUESTIONS = [
     ),
     new Question(
         'q2',
-        'sort',
+        'sortable',
         'Question 2',
         'Sort these australian cities based on their population from highest to lowest.',
         'As of now, Sydney is still the most populous city of Australia.',
@@ -35,7 +35,12 @@ export const QUESTIONS = [
             answer_4: 'Sydney'
         },
         [], // no correct or wrong answers in sorting questions
-        ['answer_4', 'answer_3', 'answer_2', 'answer_1'],
+        {   // correct sort
+            answer_1: 'Sydney',
+            answer_2: 'Melbourne',
+            answer_3: 'Brisbane',
+            answer_4: 'Perth'
+        },
         [] // no correct or wrong answers in sorting questions
     ),
     new Question(
@@ -50,7 +55,7 @@ export const QUESTIONS = [
             answer_3: 'Brisbane',
             answer_4: 'Melbourne'
         },
-        {
+        {   // correct answers are true
             answer_1: true,
             answer_2: false,
             answer_3: true,
@@ -61,7 +66,7 @@ export const QUESTIONS = [
     ),
     new Question(
         'q4',
-        'sort',
+        'sortable',
         'Question 4',
         'Sort these australian universities based on their population from highest to lowest.',
         'Melbourne, Sydney and Queensland are not in the first place.',
@@ -72,7 +77,12 @@ export const QUESTIONS = [
             answer_4: 'University of Queensland'
         },
         [], // no correct or wrong answers in sorting questions
-        ['answer_4', 'answer_3', 'answer_2', 'answer_1'],
+        {   // correct sort
+            answer_1: 'University of Queensland',
+            answer_2: 'University of Sydney',
+            answer_3: 'University of Melbourne',
+            answer_4: 'Australian National University'
+        },
         [] // no correct or wrong answers in sorting questions
     )
 ];
