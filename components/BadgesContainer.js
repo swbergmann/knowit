@@ -76,7 +76,7 @@ function BadgesContainer({storedName}) {
         historian =  (
         <>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
-            <Text style={styles.badgeText}>Historian</Text>
+            <Text style={styles.badgeText}>Historian (90%)</Text>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
         </>
     )};
@@ -92,7 +92,7 @@ function BadgesContainer({storedName}) {
         researcher =  (
         <>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
-            <Text style={styles.badgeText}>Researcher</Text>
+            <Text style={styles.badgeText}>Researcher (70%)</Text>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
         </>
     )};
@@ -108,7 +108,7 @@ function BadgesContainer({storedName}) {
         journalist =  (
         <>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
-            <Text style={styles.badgeText}>Journalist</Text>
+            <Text style={styles.badgeText}>Journalist (50%)</Text>
             <FontAwesome name="star-o" style={styles.badgeIcon} />
         </>
     )};

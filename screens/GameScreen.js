@@ -12,6 +12,8 @@ import Fonts from '../constants/fonts';
 
 function GameScreen({storedName, onEndGame}) {
     const MAXPOINTS = 100; // maximum points available per question
+    const USEHINT = 75; // using a hint subtracts 25% of currently available points
+    const WRONGANSWER =  75; // submitting a wrong answer subtracts 25% of currently available points
     const PLAYERNAME = storedName;
 
     const [index, setIndex] = useState(0); // helper to iterate over the QUESTIONS
@@ -62,7 +64,7 @@ function GameScreen({storedName, onEndGame}) {
         } else if (!isQuestionSortable && !isAnswerCorrect()) {
             console.log('multiselect && WRONG answer')
             setIsSubmitDisabledAfterPressForMultiselect(true);
-            setCountdown(Math.ceil(countdown / 100 * 50)); // this prevents decimals in the countdown
+            setCountdown(Math.ceil(countdown / 100 * WRONGANSWER)); // this prevents decimals in the countdown
         } else if (isQuestionSortable && isSortCorrect()) { // Sortable
             console.log('sortable && CORRECT answer')
 
@@ -82,7 +84,7 @@ function GameScreen({storedName, onEndGame}) {
         } else if (isQuestionSortable && !isSortCorrect()) { // WRONG answer
             console.log('sortable && WRONG answer')
             setIsSubmitDiabledAfterPressForSortable(true);
-            setCountdown(Math.ceil(countdown / 100 * 50)); // this prevents decimals in the countdown
+            setCountdown(Math.ceil(countdown / 100 * WRONGANSWER)); // this prevents decimals in the countdown
         }
 
 
@@ -318,7 +320,7 @@ function GameScreen({storedName, onEndGame}) {
     }
 
     function showHint() {
-        setCountdown(Math.ceil(countdown / 100 * 75)); // this prevents decimals in the countdown
+        setCountdown(Math.ceil(countdown / 100 * USEHINT)); // this prevents decimals in the countdown
         setIsHintVisible(true);
     }
 
