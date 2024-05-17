@@ -25,6 +25,7 @@ function GameScreen({storedName, onEndGame}) {
     const [isAnswer3Selected, setIsAnswer3Selected] = useState(false);
     const [isAnswer4Selected, setIsAnswer4Selected] = useState(false);
     const [feedback, setFeedback] = useState({}); // immediate user feedback
+    const [feedbackStyle, setFeedbackStyle] = useState({}); // immediate user feedback
     const [isSubmitDisabledAfterPressForMultiselect, setIsSubmitDisabledAfterPressForMultiselect] = useState(false); // if multiselection is wrong --> disable submit button
     const [isSubmitDiabledAfterPressForSortable, setIsSubmitDiabledAfterPressForSortable] = useState(false); // if sort is wrong --> disable submit button
 
@@ -436,20 +437,37 @@ function GameScreen({storedName, onEndGame}) {
 
     const provideUserFeedback = () => {
         let feedback = {};
+        let style;
     
         if (isQuestionSortable && !isSubmitDiabledAfterPressForSortable) {
             feedback.message = 'If you are confident, press submit.';
+            style = 'info';
         } else if (isQuestionSortable && isSubmitDiabledAfterPressForSortable) {
             feedback.message = 'Incorrect answer. Try again!';
+            style = 'error';
         } else if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected) { // validate name field
             feedback.message = 'Select an answer to proceed.';
+            style = 'info';
         } else if (isSubmitDisabledAfterPressForMultiselect) {
             feedback.message = 'Incorrect answer. Try again!';
+            style = 'error';
         } else {
             feedback.message = 'If you are confident, press submit.';
+            style = 'info';
         }
     
         setFeedback(feedback);
+        setFeedbackStyle(style);
+    };
+
+    function getFeedbackStyle(type) {
+        let color;
+
+        if (feedbackStyle == 'error') {
+            color = 'red';    
+        }
+
+        return {color: color};
     };
 
     function sendSortable1down() {
@@ -765,7 +783,7 @@ function GameScreen({storedName, onEndGame}) {
 
                         {/* interactive feedback */}
                         {Object.values(feedback).map((message, index) => (
-                        <Text key={index} style={styles.flex1}>
+                        <Text key={index} style={[styles.flex1, getFeedbackStyle()]}>
                             {message}
                         </Text>
                         ))}
