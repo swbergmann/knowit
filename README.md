@@ -27,6 +27,17 @@ Close the Cached Project App and the Expo App (swipe up both apps)
 In VS Code Terminal press "a"  
 The Expo App bundles the Project App again and automatically connects to the React DevTool.
 
+## Unit Testing ##
+### Installation ###
+https://docs.expo.dev/develop/unit-testing/
+
+### Using Async Storage mock ###
+https://react-native-async-storage.github.io/async-storage/docs/advanced/jest/  
+With mocks directory.
+
+### Command ###
+npm run test
+
 ## GitHub ##
 ### How To: Push an existing repository from the command line. ###
 git init  
