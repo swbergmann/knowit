@@ -7,25 +7,23 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
+/**
+ * The HighscoreContainer component displays
+ * - the top 3 highscores
+ * 
+ * Each highscore consists of a player name and a score.
+ * i.e. 1st place consist of 'first_name' and 'first_score' from the storage.
+ * 
+ * Creating highscores is achieved and described in the GameScreen component.
+ */
+
 function HighscoreContainer() {
-    const [highscores, setHighscores] = useState({});
+    const [highscores, setHighscores] = useState({});   // object used to store information about each of the top-3 highscores
 
     /**
-    * Every time a game finishes, we try to store the score of the player into the AsyncStorage
-    * We check the current score against the keys "first_score", then "second_score", then "third_score"
-    * 
-    */
-
-    // let highscore = {
-    //   first_score: "100",
-    //   first_name: "{name}",
-    //   second_score: "85",
-    //   second_name: "{name}",
-    //   third_score: "78",
-    //   third_name: "{name}"
-    // };
-
-    // LOAD highscore from storage
+     * LOAD highscore relevant data from storage for
+     * first, second and third place.
+     */
     const getHighscores = async () => {
         let scores = {};
 
@@ -72,16 +70,21 @@ function HighscoreContainer() {
             }
         } catch (e) {console.log(e);}
 
-        setHighscores(scores);
+        setHighscores(scores); // set the new state
     };
 
-    // initiate as empty string and empty views
+    /**
+     * Initiate variables as empty string and empty views by default
+     * in case no highscore exists. Then we display a message (see below)
+     * 
+     * Use these variables in the JSX below.
+     */
     let noHighscoresMessage = "";
     let highscoreFirstPlace = <View></View>;
     let highscoreSecondPlace = <View></View>;
     let highscoreThirdPlace = <View></View>;
 
-    // override with data, if data is stored
+    // Override the empty defaults with data, if highscores are found in the storage
     if ((highscores.first_score != null) && (highscores.first_name != null)) {
         highscoreFirstPlace = (
             <View style={styles.rowDark}>
@@ -90,7 +93,7 @@ function HighscoreContainer() {
                 <Text style={styles.score}>Score: {highscores.first_score}</Text>
             </View>);
     } else {
-        // no highscore exists
+        // If no highscore exists, we display an info message.
         noHighscoresMessage = "Not available. Play the game to create the first highscore.";
         highscoreFirstPlace = (
             <View style={styles.row}>
@@ -99,6 +102,7 @@ function HighscoreContainer() {
         )
     }
 
+    // Override the empty defaults with data, if highscores are found in the storage
     if ((highscores.second_score != null) && (highscores.second_name != null)) {
         highscoreSecondPlace = (
             <View style={styles.rowDark}>
@@ -108,6 +112,7 @@ function HighscoreContainer() {
             </View>);
     }
 
+    // Override the empty defaults with data, if highscores are found in the storage
     if ((highscores.third_score != null) && (highscores.third_name != null)) {
         highscoreThirdPlace = (
             <View style={styles.rowDark}>
@@ -117,10 +122,9 @@ function HighscoreContainer() {
             </View>);
     }
 
-    // load data for the highscore leaderboard when the component renders
     useEffect(() => {
         getHighscores();
-    }, []);
+    }, []); // call the function only on the first loading of the component
 
     return(
         <View style={styles.highscoreContainer}>

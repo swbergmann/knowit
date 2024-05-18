@@ -1,3 +1,8 @@
+/**
+ * Define color codes in a central place in order to make them
+ * re-usable and if necessary, only change them in 1 file.
+ */
+
 const Colors = {
     primary200: '#4B58DD',
     primary300: '#575DD9',

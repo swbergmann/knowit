@@ -1,5 +1,10 @@
 import Question from "../models/question";
 
+/**
+ * The Question Class is used to create an array of 7 questions.
+ * Since this data never changes, we define a constant named QUESTIONS
+ */
+
 export const QUESTIONS = [
     new Question(
         'q1',
@@ -19,7 +24,7 @@ export const QUESTIONS = [
             answer_3: false,
             answer_4: true
         },
-        [] // no sort order in multiple choice questions
+        {} // no correct order in multiple choice questions
     ),
     new Question(
         'q2',
@@ -33,8 +38,8 @@ export const QUESTIONS = [
             answer_3: 'Melbourne',
             answer_4: 'Sydney'
         },
-        [], // no correct or wrong answers in sorting questions
-        {   // correct sort
+        {}, // no correct or wrong answers in sortable questions
+        {   // correct order
             answer_1: 'Sydney',
             answer_2: 'Melbourne',
             answer_3: 'Brisbane',
@@ -59,7 +64,7 @@ export const QUESTIONS = [
             answer_3: true,
             answer_4: true
         },
-        [] // no sort order in multiple choice questions
+        {} // no correct order in multiple choice questions
     ),
     new Question(
         'q4',
@@ -73,8 +78,8 @@ export const QUESTIONS = [
             answer_3: 'Melbourne',
             answer_4: 'Brisbane'
         },
-        [], // no correct or wrong answers in sorting questions
-        {   // correct sort
+        {}, // no correct or wrong answers in sortable questions
+        {   // correct order
             answer_1: 'Perth',
             answer_2: 'Brisbane',
             answer_3: 'Sydney',
@@ -93,8 +98,8 @@ export const QUESTIONS = [
             answer_3: 'Adelaide',
             answer_4: 'Brisbane'
         },
-        [], // no correct or wrong answers in sorting questions
-        {   // correct sort
+        {}, // no correct or wrong answers in sortable questions
+        {   // correct order
             answer_1: 'Sydney',
             answer_2: 'Melbourne',
             answer_3: 'Brisbane',
@@ -113,13 +118,13 @@ export const QUESTIONS = [
             answer_3: 'Spain',
             answer_4: 'Great Britain'
         },
-        {   // correct sort
+        {   // correct order
             answer_1: true,
             answer_2: false,
             answer_3: true,
             answer_4: true
         },
-        [] // no correct or wrong answers in sorting questions
+        {} // no correct or wrong answers in sortable questions
     ),
     new Question(
         'q7',
@@ -133,12 +138,12 @@ export const QUESTIONS = [
             answer_3: 'Brisbane',
             answer_4: 'Melbourne'
         },
-        {   // correct sort
+        {   // correct order
             answer_1: false,
             answer_2: true,
             answer_3: false,
             answer_4: true
         },
-        [] // no correct or wrong answers in sorting questions
+        {} // no correct or wrong answers in sortable questions
     )
 ];

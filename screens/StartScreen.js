@@ -5,47 +5,56 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
-// use object-destructuring to automatically pull out these props from the incoming props object
-function StartScreen({onStore, onGetName}) {
-  const [userInput, setUserInput] = useState('');
-  const [errors, setErrors] = useState({});
-  const [isFormValid, setIsFormValid] = useState(false);
+/**
+ * The StartScreen component displays
+ * - a welcome image
+ * - name of the app
+ * - an input field for the user name
+ * - validation feedback for the user name
+ * - a 'Login' button.
+ */
+function StartScreen({onStore, onGetName}) {              // use object-destructuring to automatically pull out these props from the incoming props object
+  const [userInput, setUserInput] = useState('');         // state of the user input (player name)
+  const [errors, setErrors] = useState({});               // error messages for input of player name
+  const [isFormValid, setIsFormValid] = useState(false);  // is the input valid or not
 
-  function inputChangeHandler(text) {
-    setUserInput(text.trim()); // remove white-spaces
+  function inputChangeHandler(text) {   // executed when text input changes
+    setUserInput(text.trim());          // set value of 'userInput' to the input text provided by the user (and remove all white-spaces)
   }
 
-  function pressHandler() {
-    if (isFormValid) { // only store input if form is validated
-      onStore(userInput);
-      onGetName(); // update storedName to switch screens
+  function pressHandler() {   // executed when 'Login' button is clicked
+    if (isFormValid) {        // only store input if form is validated
+      onStore(userInput);     // store user input in the AsyncStorage
+      onGetName();            // load and update 'storedName' to switch screens (via conditions in App.js)
     }
   }
 
   const validateForm = () => {
     let errors = {};
 
-    if (!userInput) { // validate name field
+    if (!userInput) {                     // input is empty
       errors.name = 'Name is required.';
-    } else if (userInput.length < 3) {
+    } else if (userInput.length < 3) {    // input is too short
       errors.name = 'Name must be at least 3 characters.';
-    } else if (userInput.length > 10) {
+    } else if (userInput.length > 10) {   // input is too long
       errors.name = 'Maximum length is 10 characters.';
     }
 
-    setErrors(errors);
-    setIsFormValid(Object.keys(errors).length === 0); // form is only valid if 0 errors occur
+    setErrors(errors); // update the error message in the 'errors' state
+    setIsFormValid(Object.keys(errors).length === 0);   // form is only valid (true) if exactly  0 errors occur in the validation
   }
 
   useEffect(() => {
-    validateForm(); // validate form on every user input
-  }, [userInput]);
+    validateForm(); // call this function (validate form)
+  }, [userInput]);  // every time the 'userInput' state changes
 
   return (
     <KeyboardAvoidingView
+      // to scrool up the screen if the device keyboard opens on an IOS device use 'padding' otherwise (Android) use 'height'
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={styles.container}>
       <SafeAreaView style={styles.safe}>
+        {/* close the device keyboard, if the user presses anywhere on the screen - with exception of the text input element */}
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.inner}>
             <View style={styles.visible}>
@@ -72,7 +81,7 @@ function StartScreen({onStore, onGetName}) {
                     />
                 </View>
 
-                {/* show errors only when they exist */}
+                {/* error messages are displayed when the form validation detects them */}
                 {Object.values(errors).map((error, index) => (
                   <Text key={index} style={styles.error}>
                     {error}
@@ -80,6 +89,7 @@ function StartScreen({onStore, onGetName}) {
                 ))}
                 
                 <View style={styles.buttonOuterContainer}>
+                  {/* Login button: platform dependent styles are applied to provide click-feedback (slight color change) */}
                   <Pressable 
                     style={({pressed}) =>
                       pressed && Platform.OS === 'ios'
@@ -94,6 +104,7 @@ function StartScreen({onStore, onGetName}) {
                 </View>
               </View>
             </View>
+            {/* Empty View as last emelemt is necessary to have a pretty styling AND the scroll-up behavior of the KeyboardAvoidingView */}
             <View style={styles.empty}></View>
           </View>
         </TouchableWithoutFeedback>

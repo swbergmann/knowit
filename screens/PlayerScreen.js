@@ -1,16 +1,30 @@
 import { StyleSheet, View, Text, Pressable, Platform } from 'react-native';
 import { SimpleLineIcons } from "@expo/vector-icons";
 
-import Colors from '../constants/colors';
 import BadgesContainer from '../components/BadgesContainer';
 import HighscoreContainer from '../components/HighscoreContainer';
+
+import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
-function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
+/**
+ * The PlayerScreen component displays:
+ * - the player's name
+ * - a 'Logout' button
+ * - a 'Play' button
+ * - Badges, if they are unlocked
+ * - Leaderboard with the top 3 highscores of all players (on this device)
+ */
 
-  function eraseHandler() {
+function PlayerScreen({onRemove,  // delete 'name' from storage to log player out
+                      onGetName,  // re-load 'storedName' from storage (which is then 'null') to switch to StartScreen
+                      storedName, // player name to display on the screen
+                      onStartGame // user clicks on "Play" button --> change state of 'gameInPlay' to TRUE --> switch to GameScreen
+                    }) {
+
+  function eraseHandler() { // user clicks on "Logout" button --> erase 'name' from storage --> switch to StartScreen
     onRemove();
-    onGetName(); // update storedName to switch screens
+    onGetName();
   }
 
   return (
@@ -23,6 +37,8 @@ function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
           </View>
           <View style={styles.playerRow}>
             <View style={styles.buttonOuterContainer}>
+
+              {/* Logout button: platform dependent styles are applied to provide click-feedback (slight color change) */}
               <Pressable 
                 style={({pressed}) =>
                   pressed && Platform.OS === 'ios'
@@ -36,6 +52,8 @@ function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
               </Pressable>
             </View>
             <View style={styles.buttonOuterContainer}>
+
+              {/* Play button: platform dependent styles are applied to provide click-feedback (slight color change) */}
               <Pressable 
                 style={({pressed}) =>
                   pressed && Platform.OS === 'ios'
@@ -51,9 +69,12 @@ function PlayerScreen({onRemove, onGetName, storedName, onStartGame}) {
           </View>
         </View>
 
+        {/* use custom component, see BadgesContainer.js file */}
         <BadgesContainer storedName={storedName} />
 
+        {/* use custom component, see HighscoreContainer.js file */}
         <HighscoreContainer />
+
       </View>
     </View>
   );
@@ -134,8 +155,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.button100
   },
   startGameButton: {
-    backgroundColor: Colors.button300,
-    // marginLeft: 30
+    backgroundColor: Colors.button300
   },
   buttonText: {
     color: 'white',

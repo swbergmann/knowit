@@ -10,6 +10,63 @@ import { QUESTIONS } from '../data/game-data';
 import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
+
+/**
+ * 
+   * 1. load the data from the QUESTIONS array
+   * 2. take only the question with the lowest array index (i.e. 0)
+   *    and remove it from the array (to show it only once)
+   * 3. check the TYPE of the quesiton (i.e. multiselect or sort)
+   * 4. build the screen for the question based on the TYPE
+   *    (i.e. different JSX component is used for sortable answers or multiselect answers)
+   * 5. countdown starts from 100 and decreases 1 point each second (automatic update)
+   * 6. answering the question correctly adds the current points from the countdown to the
+   *    user's current "score" and re-renders the entire screen for the next question
+   *    if there is a next question
+   * 7. if there is no next question (QUESTIONS array is empty)
+   *    a. then we check if the user unlocked a new badge
+   *    b. then we try to store the user's current "score" into the top 3 positions 
+   *       of the storage.
+   * 8. render PlayerScreen (overview of badges and highscores)
+   * 
+   * 
+   * 
+   * 
+   * 
+   * 
+   *  * Every time a game finishes, the badges of the player are updated (via the GameScreen)
+ * If their game score is >= 50% they unlock the *Journalist* badge.
+ * If their game score is >= 75% they unlock the *Researcher* badge.
+ * If their game score is >= 90% they unlock the *Historian* badge.
+ * 
+ * Each badge becomes visible (or unlocked) because an entry is made in 
+ * the local storage in the form of a key-value pair
+ * i.e. "{name}-journalist": true
+ * 
+ * In this way various players each have their individual state of badges.
+ * 
+ * 
+ * 
+ * 
+ *     * Every time a game finishes, we try to store the score of the player into the AsyncStorage
+    * We check the current score against the keys "first_score", then "second_score", then "third_score"
+
+    // let highscore = {
+    //   first_score: "100",
+    //   first_name: "{name}",
+    //   second_score: "85",
+    //   second_name: "{name}",
+    //   third_score: "78",
+    //   third_name: "{name}"
+    // };
+ * 
+ * 
+ * 
+ */
+
+
+
+
 function GameScreen({storedName, onEndGame}) {
     const MAXPOINTS = 100; // maximum points available per question
     const USEHINT = 75; // using a hint subtracts 25% of currently available points

@@ -1,34 +1,34 @@
 import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { StyleSheet, View, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 
 import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
-function BadgesContainer({storedName}) {
-    /* assign storedName to const 
-    * to make it accessible in this function
-    * to be used whenever needed in the JS code
-    */
-    const playerName = storedName;
-    
-    const [badges, setBadges] = useState({});
+/**
+ * The BadgesContainer component displays:
+ * - 3 badges, each of which can be unlocked by the user by reaching a good score in the quiz.
+ * 
+ * Unlocking badges is achieved and described in the GameScreen component.
+ * 
+ * The BadgesContainer component only provides functions to check if the current player has unlocked any badges or not.
+ * This is done by searching a combination of playerName + BadgeName in the storage.
+ * 
+ * The BadgesContainer component displays unlocked badges in a colorful styling and locked badges in a grayed-out styling.
+ * 
+ * Different players on the same device can have different badges unlocked.
+ */
 
-    /**
-    * Every time a game finishes, the badges of the player are updated
-    * If players finish their first game (no matter how low the achieved score is)
-    * they unlock the *Journalist* badge.
-    * If their game score is > 75% they unlock the *Researcher* badge.
-    * If their game score is > 90% they unlock the *Historian* badge.
-    * 
-    * Each badge becomes visible (or unlocked) because an entry is made in 
-    * the local storage in the form of a key-value pair
-    * i.e. "{name}-journalist": true
-    * 
-    * In this way various players each have their individual state of badges.
+function BadgesContainer({storedName}) {
+    /*
+    * The prop 'storedName' (which is the player name) is received when this component is rendered.
+    * However, in order to access this value whenever a function is called in the JS code,
+    * we must assign it to a local variable (playerName).
     */
+    const playerName = storedName;              // necessary for searching the player + badge combinatio in the storage
+    const [badges, setBadges] = useState({});   // object used to store information about each of the 3 badges (unlocked or not).
 
     // LOAD player's badges from storage
     const getBadges = async () => {
@@ -44,7 +44,7 @@ function BadgesContainer({storedName}) {
         } catch (e) {console.log(e);}
 
         try { // Researcher
-            let key = storedName + '-researcher';
+            let key = playerName + '-researcher';
             let badgeResearcher = await AsyncStorage.getItem(key);
 
             if (badgeResearcher != null) {
@@ -53,7 +53,7 @@ function BadgesContainer({storedName}) {
         } catch (e) {console.log(e);}
 
         try { // Historian
-            let key = storedName + '-historian';
+            let key = playerName + '-historian';
             let badgeHistorian = await AsyncStorage.getItem(key);
 
             if (badgeHistorian != null) {
@@ -61,12 +61,12 @@ function BadgesContainer({storedName}) {
             }
         } catch (e) {console.log(e);}
 
-        setBadges(badges);
+        setBadges(badges); // set the new state
     };
 
-    // SET styling for the content to be rendered
-    if (badges.historian === true) {
-        historian = (
+    let historian;                      // use this variable in JSX below
+    if (badges.historian === true) {    // depending if the badge is unlocked or not
+        historian = (                   // apply different styling and text (colorful or grayed-out badge)
         <>
             <FontAwesome name="star" style={styles.badgeIconUnlocked} />
             <Text style={styles.badgeTextUnlocked}>Historian</Text>
@@ -81,8 +81,9 @@ function BadgesContainer({storedName}) {
         </>
     )};
 
-    if (badges.researcher === true) {
-        researcher = (
+    let researcher;                     // use this variable in JSX below
+    if (badges.researcher === true) {   // depending if the badge is unlocked or not
+        researcher = (                  // apply different styling and text (colorful or grayed-out badge)
         <>
             <FontAwesome name="star" style={styles.badgeIconUnlocked} />
             <Text style={styles.badgeTextUnlocked}>Researcher</Text>
@@ -97,8 +98,9 @@ function BadgesContainer({storedName}) {
         </>
     )};
 
-    if (badges.journalist === true) {
-        journalist = (
+    let journalist;                     // use this variable in JSX below
+    if (badges.journalist === true) {   // depending if the badge is unlocked or not
+        journalist = (                  // apply different styling and text (colorful or grayed-out badge)
         <>
             <FontAwesome name="star" style={styles.badgeIconUnlocked} />
             <Text style={styles.badgeTextUnlocked}>Journalist</Text>
@@ -113,22 +115,9 @@ function BadgesContainer({storedName}) {
         </>
     )};
 
-    // TEST functionality
-    const addBadge = async () => {
-        // try {
-        //     await AsyncStorage.clear();
-        //     console.log('clear()---------');
-        // } catch (e) {console.log(e);}
-
-        
-        getBadges(playerName);
-    };
-
-    // define when to load badges
-    // i.e. empty array means only on first page load
     useEffect(() => {
         getBadges(playerName);
-    }, []);
+    }, []); // query the badges from storage only on the first loading of the component
     
     return(
         <View style={styles.badgesContainer}>
@@ -144,9 +133,6 @@ function BadgesContainer({storedName}) {
             <View style={styles.row}>
                 {journalist}
             </View>
-            {/* <Pressable onPress={addBadge}>
-                <Text>Test</Text>
-            </Pressable> */}
         </View>
     );
 }
