@@ -5,6 +5,8 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import Colors from '../constants/colors';
 import Fonts from '../constants/fonts';
 
+import { validateLogin } from '../utils/validateLogin';
+
 /**
  * The StartScreen component displays
  * - a welcome image
@@ -15,7 +17,7 @@ import Fonts from '../constants/fonts';
  */
 function StartScreen({onStore, onGetName}) {              // use object-destructuring to automatically pull out these props from the incoming props object
   const [userInput, setUserInput] = useState('');         // state of the user input (player name)
-  const [errors, setErrors] = useState({});               // error messages for input of player name
+  const [error, setError] = useState('');               // error messages for input of player name
   const [isFormValid, setIsFormValid] = useState(false);  // is the input valid or not
 
   function inputChangeHandler(text) {   // executed when text input changes
@@ -29,7 +31,7 @@ function StartScreen({onStore, onGetName}) {              // use object-destruct
     }
   }
 
-  const validateForm = () => {
+  const oldFunctionvalidateForm = () => {
     let errors = {};
 
     if (!userInput) {                     // input is empty
@@ -40,12 +42,27 @@ function StartScreen({onStore, onGetName}) {              // use object-destruct
       errors.name = 'Maximum length is 10 characters.';
     }
 
-    setErrors(errors); // update the error message in the 'errors' state
+    setError(errors); // update the error message in the 'errors' state
     setIsFormValid(Object.keys(errors).length === 0);   // form is only valid (true) if exactly  0 errors occur in the validation
   }
 
+  // function validateLogin(input) {
+  //   let errors = {};
+
+  //   if (!input) {                     // input is empty
+  //     errors.name = 'Name is required.';
+  //   } else if (input.length < 3) {    // input is too short
+  //     errors.name = 'Name must be at least 3 characters.';
+  //   } else if (input.length > 10) {   // input is too long
+  //     errors.name = 'Maximum length is 10 characters.';
+  //   }
+
+  //   return errors;
+  // }
+
   useEffect(() => {
-    validateForm(); // call this function (validate form)
+    setError(validateLogin(userInput));
+    setIsFormValid(Object.keys(validateLogin(userInput)).length === 0);
   }, [userInput]);  // every time the 'userInput' state changes
 
   return (
@@ -81,12 +98,10 @@ function StartScreen({onStore, onGetName}) {              // use object-destruct
                     />
                 </View>
 
-                {/* error messages are displayed when the form validation detects them */}
-                {Object.values(errors).map((error, index) => (
-                  <Text key={index} style={styles.error}>
-                    {error}
-                  </Text>
-                ))}
+                {/* error message is displayed when the form validation detects them */}
+                <Text style={styles.error}>
+                  {error}
+                </Text>
                 
                 <View style={styles.buttonOuterContainer}>
                   {/* Login button: platform dependent styles are applied to provide click-feedback (slight color change) */}

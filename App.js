@@ -102,6 +102,7 @@ export default function App() {
   }
 
   return (
+    // components must return exactyl 1 child element at the highest level i.e. <></>
     <>
       {/* white text and icons in the top status bar (i.e. time, network connection) because of the dark background color of the screens */}
       <StatusBar style='light' />

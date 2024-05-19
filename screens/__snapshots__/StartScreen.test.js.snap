@@ -1,0 +1,236 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders StartScreen correctly 1`] = `
+<View
+  onLayout={[Function]}
+  style={
+    [
+      {
+        "backgroundColor": "#18254D",
+        "flex": 1,
+      },
+      {
+        "paddingBottom": 0,
+      },
+    ]
+  }
+>
+  <RCTSafeAreaView
+    style={
+      {
+        "flex": 1,
+        "marginTop": 60,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "borderRadius": 8,
+          "flex": 1,
+          "justifyContent": "flex-end",
+          "margin": 20,
+          "overflow": "hidden",
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "borderRadius": 8,
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "white",
+              "borderBottomColor": "#d5d5d5",
+              "borderBottomWidth": 2,
+              "width": "100%",
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={1}
+            style={
+              {
+                "height": 210,
+                "width": "100%",
+              }
+            }
+          />
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            to the quizzing app
+          </Text>
+          <Text
+            style={
+              {
+                "fontSize": 36,
+                "marginVertical": 20,
+              }
+            }
+          >
+            Know It?!
+          </Text>
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#f1f3f5",
+              "paddingVertical": 20,
+            }
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#878787",
+                "fontSize": 20,
+              }
+            }
+          >
+            Enter your name
+          </Text>
+          <View
+            style={
+              {
+                "alignSelf": "stretch",
+                "backgroundColor": "white",
+                "borderColor": "#d5d5d5",
+                "borderRadius": 6,
+                "borderWidth": 2,
+                "flexDirection": "row",
+                "marginHorizontal": 24,
+                "marginVertical": 24,
+                "overflow": "hidden",
+                "padding": 10,
+              }
+            }
+          >
+            <Text />
+            <TextInput
+              autoCorrect={false}
+              onChangeText={[Function]}
+              placeholder="Name"
+              style={
+                {
+                  "fontSize": 24,
+                  "marginHorizontal": 24,
+                  "width": "100%",
+                }
+              }
+            />
+          </View>
+          <Text
+            style={
+              {
+                "color": "red",
+                "fontSize": 20,
+              }
+            }
+          />
+          <View
+            style={
+              {
+                "borderRadius": 6,
+                "marginTop": 85,
+                "marginVertical": 32,
+                "overflow": "hidden",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onFocus={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "#4B58DD",
+                  "justifyContent": "center",
+                  "paddingHorizontal": 12,
+                  "paddingVertical": 8,
+                  "width": 120,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "white",
+                    "fontSize": 24,
+                  }
+                }
+              >
+                Login
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "flex": 1,
+          }
+        }
+      />
+    </View>
+  </RCTSafeAreaView>
+</View>
+`;
