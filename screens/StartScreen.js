@@ -17,11 +17,11 @@ import { validateLogin } from '../utils/validateLogin';
  */
 function StartScreen({onStore, onGetName}) {              // use object-destructuring to automatically pull out these props from the incoming props object
   const [userInput, setUserInput] = useState('');         // state of the user input (player name)
-  const [error, setError] = useState('');               // error messages for input of player name
+  const [error, setError] = useState('');                 // error messages for input of player name
   const [isFormValid, setIsFormValid] = useState(false);  // is the input valid or not
 
   function inputChangeHandler(text) {   // executed when text input changes
-    setUserInput(text.trim());          // set value of 'userInput' to the input text provided by the user (and remove all white-spaces)
+    setUserInput(text);       // set value of 'userInput' to the input text provided by the user
   }
 
   function pressHandler() {   // executed when 'Login' button is clicked
@@ -30,35 +30,6 @@ function StartScreen({onStore, onGetName}) {              // use object-destruct
       onGetName();            // load and update 'storedName' to switch screens (via conditions in App.js)
     }
   }
-
-  const oldFunctionvalidateForm = () => {
-    let errors = {};
-
-    if (!userInput) {                     // input is empty
-      errors.name = 'Name is required.';
-    } else if (userInput.length < 3) {    // input is too short
-      errors.name = 'Name must be at least 3 characters.';
-    } else if (userInput.length > 10) {   // input is too long
-      errors.name = 'Maximum length is 10 characters.';
-    }
-
-    setError(errors); // update the error message in the 'errors' state
-    setIsFormValid(Object.keys(errors).length === 0);   // form is only valid (true) if exactly  0 errors occur in the validation
-  }
-
-  // function validateLogin(input) {
-  //   let errors = {};
-
-  //   if (!input) {                     // input is empty
-  //     errors.name = 'Name is required.';
-  //   } else if (input.length < 3) {    // input is too short
-  //     errors.name = 'Name must be at least 3 characters.';
-  //   } else if (input.length > 10) {   // input is too long
-  //     errors.name = 'Maximum length is 10 characters.';
-  //   }
-
-  //   return errors;
-  // }
 
   useEffect(() => {
     setError(validateLogin(userInput));

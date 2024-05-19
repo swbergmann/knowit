@@ -13,7 +13,7 @@ export const validateLogin = (input) => {
     if (!testInput) {                           // input is empty
       error = 'Name is required.';
     } else if (testInput.length < 3) {          // input is too short
-      error = 'Name must be at least 3 characters.';
+      error = 'Minimum length is 3 characters.';
     } else if (testInput.length > 10) {         // input is too long
       error = 'Maximum length is 10 characters.';
     }

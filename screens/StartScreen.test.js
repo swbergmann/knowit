@@ -39,17 +39,17 @@ it('does not allow blank spaces as input for login', () => {
 
 it('does not allow 1 letter input for login', () => {
   expect(validateLogin('S'))
-  .toBe('Name must be at least 3 characters.');
+  .toBe('Minimum length is 3 characters.');
 });
 
 it('does not allow 2 letter input for login', () => {
   expect(validateLogin('Se'))
-  .toBe('Name must be at least 3 characters.');
+  .toBe('Minimum length is 3 characters.');
 });
 
 it('does not allow several blank spaces in combination with 2 letter input for login', () => {
   expect(validateLogin(' S e '))
-  .toBe('Name must be at least 3 characters.');
+  .toBe('Minimum length is 3 characters.');
 });
 
 it('allows 3 letter input for login', () => {
