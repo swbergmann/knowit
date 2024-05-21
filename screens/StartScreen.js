@@ -76,17 +76,19 @@ function StartScreen({onStore, onGetName}) {              // use object-destruct
                 
                 <View style={styles.buttonOuterContainer}>
                   {/* Login button: platform dependent styles are applied to provide click-feedback (slight color change) */}
-                  <Pressable 
-                    style={({pressed}) =>
-                      pressed && Platform.OS === 'ios'
-                        ? [styles.buttonInnerContainer, styles.pressed]
-                        : styles.buttonInnerContainer
-                    }
-                    onPress={pressHandler}
-                    android_ripple={{color: Colors.primary600}}
-                    >
-                    <Text style={styles.buttonText}>Login</Text>
-                  </Pressable>
+                  <View style={styles.buttonMiddleContainer}>
+                    <Pressable 
+                      style={({pressed}) =>
+                        pressed && Platform.OS === 'ios'
+                          ? [styles.buttonInnerContainer, styles.pressed]
+                          : styles.buttonInnerContainer
+                      }
+                      onPress={pressHandler}
+                      android_ripple={{color: Colors.primary600}}
+                      >
+                      <Text style={styles.buttonText}>Login</Text>
+                    </Pressable>
+                  </View>
                 </View>
               </View>
             </View>
@@ -173,10 +175,19 @@ const styles = StyleSheet.create({
       width: '100%'
     },
     buttonOuterContainer: {
-      borderRadius: 6,
-      overflow: 'hidden',
       marginVertical: 32,
-      marginTop: 85
+      marginTop: 85,
+      borderRadius: 6,
+      overflow: Platform.OS == 'android' ? 'hidden' : 'visible',
+      elevation: 2,
+      shadowColor: 'black',
+      shadowOpacity: 0.15,
+      shadowOffset: {width: 0, height: 2},
+      shadowRadius: 8
+    },
+    buttonMiddleContainer: {
+      borderRadius: 6,
+      overflow: 'hidden'
     },
     buttonInnerContainer: {
       width: 120,

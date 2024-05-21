@@ -36,14 +36,14 @@ function PlayerScreen({onRemove,  // delete 'name' from storage to log player ou
             <Text style={styles.playerName}>{storedName}</Text>
           </View>
           <View style={styles.playerRow}>
-            <View style={styles.buttonOuterContainer}>
+            <View style={[styles.buttonOuterContainer, styles.buttonLeft]}>
 
               {/* Logout button: platform dependent styles are applied to provide click-feedback (slight color change) */}
               <Pressable 
                 style={({pressed}) =>
                   pressed && Platform.OS === 'ios'
-                    ? [styles.buttonInnerLeft, styles.changeNameButton, styles.pressed]
-                    : [styles.buttonInnerLeft, styles.changeNameButton]
+                    ? [styles.buttonInnerContainer, styles.changeNameButton, styles.pressed]
+                    : [styles.buttonInnerContainer, styles.changeNameButton]
                 }
                 onPress={eraseHandler}
                 android_ripple={{color: Colors.button200}}
@@ -51,14 +51,14 @@ function PlayerScreen({onRemove,  // delete 'name' from storage to log player ou
                 <Text style={styles.buttonText}>Logout</Text>
               </Pressable>
             </View>
-            <View style={styles.buttonOuterContainer}>
+            <View style={[styles.buttonOuterContainer, styles.buttonRight]}>
 
               {/* Play button: platform dependent styles are applied to provide click-feedback (slight color change) */}
               <Pressable 
                 style={({pressed}) =>
                   pressed && Platform.OS === 'ios'
-                    ? [styles.buttonInnerRight, styles.startGameButton, styles.pressed]
-                    : [styles.buttonInnerRight, styles.startGameButton]
+                    ? [styles.buttonInnerContainer, styles.startGameButton, styles.pressed]
+                    : [styles.buttonInnerContainer, styles.startGameButton]
                 }
                 onPress={onStartGame}
                 android_ripple={{color: Colors.button400}}
@@ -119,34 +119,24 @@ const styles = StyleSheet.create({
   buttonOuterContainer: {
     flex: 1,
     borderRadius: 6,
-    overflow: 'hidden'
+    overflow: Platform.OS == 'android' ? 'hidden' : 'visible',
+    elevation: 2,
+    shadowColor: 'black',
+    shadowOpacity: 0.15,
+    shadowOffset: {width: 0, height: 2},
+    shadowRadius: 8
   },
-  buttonInnerContainer: {
-    width: 120,
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 6
+  buttonRight: {
+    marginLeft: 15
   },
-  buttonInnerLeft: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'stretch',
-    borderRadius: 6,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
+  buttonLeft: {
     marginRight: 15
   },
-  buttonInnerRight: {
+  buttonInnerContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'stretch',
     borderRadius: 6,
     paddingVertical: 8,
-    paddingHorizontal: 12,
-    marginLeft: 15
+    paddingHorizontal: 12
   },
   pressed: {
     opacity: 0.75

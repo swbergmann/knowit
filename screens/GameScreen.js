@@ -784,118 +784,126 @@ function GameScreen({storedName, onEndGame}) {
             <>
                 <View style={styles.sortableRow}>
                     <View style={styles.sortableOuterContainer}>
-                        <Pressable
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.sortableIcon, styles.pressed]
-                                : [styles.sortableIcon]
-                            }
-                            onPress={sendSortable1down}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}><FontAwesome name="arrow-down" style={styles.arrowIcon} /></Text>
-                        </Pressable>
+                        <View style={styles.sortableInnerContainer}>
+                            <Pressable
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.sortableIcon, styles.pressed]
+                                    : [styles.sortableIcon]
+                                }
+                                onPress={sendSortable1down}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}><FontAwesome name="arrow-down" style={styles.arrowIcon} /></Text>
+                            </Pressable>
 
-                        <Text style={styles.sortableText}>{sortable1Text}</Text>
+                            <Text style={styles.sortableText}>{sortable1Text}</Text>
 
-                        <Pressable
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.sortableIcon, styles.hidePressable, styles.pressed]
-                                : [styles.sortableIcon, styles.hidePressable]
-                            }
-                            onPress={null}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}><FontAwesome name="arrow-up" style={styles.hideIcon} /></Text>
-                        </Pressable>
+                            <Pressable
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.sortableIcon, styles.hidePressable, styles.pressed]
+                                    : [styles.sortableIcon, styles.hidePressable]
+                                }
+                                onPress={null}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}><FontAwesome name="arrow-up" style={styles.hideIcon} /></Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.sortableRow}>
                     <View style={styles.sortableOuterContainer}>
-                        <Pressable
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.sortableIcon, styles.pressed]
-                                : [styles.sortableIcon]
-                            }
-                            onPress={sendSortable2down}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}><FontAwesome name="arrow-down" style={styles.arrowIcon} /></Text>
-                        </Pressable>
+                        <View style={styles.sortableInnerContainer}>
+                            <Pressable
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.sortableIcon, styles.pressed]
+                                    : [styles.sortableIcon]
+                                }
+                                onPress={sendSortable2down}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}><FontAwesome name="arrow-down" style={styles.arrowIcon} /></Text>
+                            </Pressable>
 
-                        <Text style={styles.sortableText}>{sortable2Text}</Text>
+                            <Text style={styles.sortableText}>{sortable2Text}</Text>
 
-                        <Pressable
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.sortableIcon, styles.pressed]
-                                : [styles.sortableIcon]
-                            }
-                            onPress={sendSortable2up}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}><FontAwesome name="arrow-up" style={styles.arrowIcon} /></Text>
-                        </Pressable>
+                            <Pressable
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.sortableIcon, styles.pressed]
+                                    : [styles.sortableIcon]
+                                }
+                                onPress={sendSortable2up}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}><FontAwesome name="arrow-up" style={styles.arrowIcon} /></Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.sortableRow}>
                     <View style={styles.sortableOuterContainer}>
-                        <Pressable
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.sortableIcon, styles.pressed]
-                                : [styles.sortableIcon]
-                            }
-                            onPress={sendSortable3down}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}><FontAwesome name="arrow-down" style={styles.arrowIcon} /></Text>
-                        </Pressable>
+                        <View style={styles.sortableInnerContainer}>
+                            <Pressable
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.sortableIcon, styles.pressed]
+                                    : [styles.sortableIcon]
+                                }
+                                onPress={sendSortable3down}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}><FontAwesome name="arrow-down" style={styles.arrowIcon} /></Text>
+                            </Pressable>
 
-                        <Text style={styles.sortableText}>{sortable3Text}</Text>
+                            <Text style={styles.sortableText}>{sortable3Text}</Text>
 
-                        <Pressable
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.sortableIcon, styles.pressed]
-                                : [styles.sortableIcon]
-                            }
-                            onPress={sendSortable3up}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}><FontAwesome name="arrow-up" style={styles.arrowIcon} /></Text>
-                        </Pressable>
+                            <Pressable
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.sortableIcon, styles.pressed]
+                                    : [styles.sortableIcon]
+                                }
+                                onPress={sendSortable3up}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}><FontAwesome name="arrow-up" style={styles.arrowIcon} /></Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.sortableRow}>
                     <View style={styles.sortableOuterContainer}>
-                        <Pressable
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.sortableIcon, styles.hidePressable, styles.pressed]
-                                : [styles.sortableIcon, styles.hidePressable]
-                            }
-                            onPress={null}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}><FontAwesome name="arrow-down" style={styles.hideIcon} /></Text>
-                        </Pressable>
+                        <View style={styles.sortableInnerContainer}>
+                            <Pressable
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.sortableIcon, styles.hidePressable, styles.pressed]
+                                    : [styles.sortableIcon, styles.hidePressable]
+                                }
+                                onPress={null}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}><FontAwesome name="arrow-down" style={styles.hideIcon} /></Text>
+                            </Pressable>
 
-                        <Text style={styles.sortableText}>{sortable4Text}</Text>
+                            <Text style={styles.sortableText}>{sortable4Text}</Text>
 
-                        <Pressable
-                            style={({pressed}) =>
-                            pressed && Platform.OS === 'ios'
-                                ? [styles.sortableIcon, styles.pressed]
-                                : [styles.sortableIcon]
-                            }
-                            onPress={sendSortable4up}
-                            android_ripple={{color: Colors.button200}}
-                        >
-                            <Text style={styles.buttonText}><FontAwesome name="arrow-up" style={styles.arrowIcon} /></Text>
-                        </Pressable>
+                            <Pressable
+                                style={({pressed}) =>
+                                pressed && Platform.OS === 'ios'
+                                    ? [styles.sortableIcon, styles.pressed]
+                                    : [styles.sortableIcon]
+                                }
+                                onPress={sendSortable4up}
+                                android_ripple={{color: Colors.button200}}
+                            >
+                                <Text style={styles.buttonText}><FontAwesome name="arrow-up" style={styles.arrowIcon} /></Text>
+                            </Pressable>
+                        </View>
                     </View>
                 </View>
             </>
@@ -950,12 +958,12 @@ function GameScreen({storedName, onEndGame}) {
                             <View style={styles.buttonOuterContainer}>
                                 
                             </View>
-                            <View style={styles.buttonOuterContainer}>
+                            <View style={[styles.buttonOuterContainer, styles.buttonRight]}>
                             <Pressable 
                                 style={({pressed}) =>
                                 pressed && Platform.OS === 'ios'
-                                    ? [styles.buttonInnerRight, hintButtonStyle(), styles.pressed]
-                                    : [styles.buttonInnerRight, hintButtonStyle()]
+                                    ? [styles.buttonInnerContainer, hintButtonStyle(), styles.pressed]
+                                    : [styles.buttonInnerContainer, hintButtonStyle()]
                                 }
                                 onPress={showHint}
                                 disabled={isHintVisible}
@@ -978,12 +986,12 @@ function GameScreen({storedName, onEndGame}) {
                         ))}
                         
                         <View style={styles.buttonsRow}>
-                            <View style={styles.buttonOuterContainer}>
+                            <View style={[styles.buttonOuterContainer, styles.buttonLeft]}>
                             <Pressable 
                                 style={({pressed}) =>
                                 pressed && Platform.OS === 'ios'
-                                    ? [styles.buttonInnerLeft, styles.abortGameButton, styles.pressed]
-                                    : [styles.buttonInnerLeft, styles.abortGameButton]
+                                    ? [styles.buttonInnerContainer, styles.abortGameButton, styles.pressed]
+                                    : [styles.buttonInnerContainer, styles.abortGameButton]
                                 }
                                 onPress={onEndGame}
                                 android_ripple={{color: Colors.button200}}
@@ -991,12 +999,12 @@ function GameScreen({storedName, onEndGame}) {
                                 <Text style={styles.buttonText}>Abort</Text>
                             </Pressable>
                             </View>
-                            <View style={styles.buttonOuterContainer}>
+                            <View style={[styles.buttonOuterContainer, styles.buttonRight]}>
                             <Pressable 
                                 style={({pressed}) =>
                                 pressed && Platform.OS === 'ios'
-                                    ? [styles.buttonInnerRight, submitButtonStyle(), styles.pressed]
-                                    : [styles.buttonInnerRight, submitButtonStyle()]
+                                    ? [styles.buttonInnerContainer, submitButtonStyle(), styles.pressed]
+                                    : [styles.buttonInnerContainer, submitButtonStyle()]
                                 }
                                 onPress={submitHandler}
                                 disabled={isSubmitButtonDisbled()}
@@ -1061,18 +1069,38 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.gray600,
         overflow: 'hidden',
         borderRadius: 6,
-        marginVertical: 16
+        marginVertical: 16,
+        overflow: Platform.OS == 'android' ? 'hidden' : 'visible',
+        elevation: 2,
+        shadowColor: 'black',
+        shadowOpacity: 0.15,
+        shadowOffset: {width: 0, height: 2},
+        shadowRadius: 8
     },
     buttonOuterContainer: {
         flex: 1,
         borderRadius: 6,
-        overflow: 'hidden'
+        overflow: Platform.OS == 'android' ? 'hidden' : 'visible',
+        elevation: 2,
+        shadowColor: 'black',
+        shadowOpacity: 0.15,
+        shadowOffset: {width: 0, height: 2},
+        shadowRadius: 8
+    },
+    buttonRight: {
+        marginLeft: 15
+    },
+    buttonLeft: {
+        marginRight: 15
     },
     sortableOuterContainer: {
-        flex: 1,
-        overflow: 'hidden',
+        flex: 1
+    },
+    sortableInnerContainer: {
+        alignItems: 'center',
         flexDirection: 'row',
-        alignItems: 'center'
+        overflow: 'hidden',
+        borderRadius: 6
     },
     sortableIcon: {
         padding: 12,
@@ -1085,31 +1113,19 @@ const styles = StyleSheet.create({
         fontSize: Fonts.h3,
         paddingVertical: 8
     },
-    buttonInnerLeft: {
+    buttonInnerContainer: {
         alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'stretch',
         borderRadius: 6,
         paddingVertical: 8,
-        paddingHorizontal: 12,
-        marginRight: 15
-    },
-    buttonInnerRight: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        alignSelf: 'stretch',
-        borderRadius: 6,
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        marginLeft: 15
+        paddingHorizontal: 12
     },
     answerButtonInnerContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'stretch',
+        borderRadius: 6,
         paddingVertical: 8,
-        paddingHorizontal: 12,
-        borderRadius: 6
+        paddingHorizontal: 12
     },
     pressed: {
         opacity: 0.75
