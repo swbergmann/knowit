@@ -19,9 +19,8 @@ export default function App() {
    * Depending on the state (also: value) of 'storedName' and 'gameInPlay' different screens are displayed.
    * i.e. StartScreen, PlayerScreen or GameScreen
    */
-  const [storedName, setStoredName] = useState(); // player name received from storage. "null" if user logs out
-  const [gameInPlay, setGameInPlay] = useState(false); // is the game currenty played or not (to render GameScreen)
-
+  const [storedName, setStoredName] = useState();       // player name received from storage. "null" if user logs out
+  const [gameInPlay, setGameInPlay] = useState(false);  // is the game currenty played or not (to render GameScreen)
 
   /**
    * AsyncStorage is used to persist data locally on the phone

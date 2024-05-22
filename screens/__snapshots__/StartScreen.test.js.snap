@@ -162,63 +162,80 @@ exports[`renders StartScreen correctly 1`] = `
             style={
               {
                 "borderRadius": 6,
+                "elevation": 2,
                 "marginTop": 85,
                 "marginVertical": 32,
-                "overflow": "hidden",
+                "overflow": "visible",
+                "shadowColor": "black",
+                "shadowOffset": {
+                  "height": 2,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.15,
+                "shadowRadius": 8,
               }
             }
           >
             <View
-              accessibilityState={
-                {
-                  "busy": undefined,
-                  "checked": undefined,
-                  "disabled": undefined,
-                  "expanded": undefined,
-                  "selected": undefined,
-                }
-              }
-              accessibilityValue={
-                {
-                  "max": undefined,
-                  "min": undefined,
-                  "now": undefined,
-                  "text": undefined,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={true}
-              onBlur={[Function]}
-              onClick={[Function]}
-              onFocus={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
               style={
                 {
-                  "alignItems": "center",
-                  "backgroundColor": "#4B58DD",
-                  "justifyContent": "center",
-                  "paddingHorizontal": 12,
-                  "paddingVertical": 8,
-                  "width": 120,
+                  "borderRadius": 6,
+                  "overflow": "hidden",
                 }
               }
             >
-              <Text
+              <View
+                accessibilityState={
+                  {
+                    "busy": undefined,
+                    "checked": undefined,
+                    "disabled": undefined,
+                    "expanded": undefined,
+                    "selected": undefined,
+                  }
+                }
+                accessibilityValue={
+                  {
+                    "max": undefined,
+                    "min": undefined,
+                    "now": undefined,
+                    "text": undefined,
+                  }
+                }
+                accessible={true}
+                collapsable={false}
+                focusable={true}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onResponderGrant={[Function]}
+                onResponderMove={[Function]}
+                onResponderRelease={[Function]}
+                onResponderTerminate={[Function]}
+                onResponderTerminationRequest={[Function]}
+                onStartShouldSetResponder={[Function]}
                 style={
                   {
-                    "color": "white",
-                    "fontSize": 24,
+                    "alignItems": "center",
+                    "backgroundColor": "#4B58DD",
+                    "justifyContent": "center",
+                    "paddingHorizontal": 12,
+                    "paddingVertical": 8,
+                    "width": 120,
                   }
                 }
               >
-                Login
-              </Text>
+                <Text
+                  style={
+                    {
+                      "color": "white",
+                      "fontSize": 24,
+                    }
+                  }
+                >
+                  Login
+                </Text>
+              </View>
             </View>
           </View>
         </View>
