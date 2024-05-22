@@ -123,9 +123,7 @@ function GameScreen({storedName, onEndGame}) {
             playerScore = score + countdown;    // increase score of the player
             setScore(playerScore);              // set new state
             
-            if (index < (QUESTIONS.length - 1)) {
-                // current question is NOT the last question - we must prepare the state of the screen
-                
+            if (index < (QUESTIONS.length - 1)) {   // current question is NOT the last question - we must prepare the state of the screen
                 // deselect all answers
                 setIsAnswer1Selected(false);
                 setIsAnswer2Selected(false);
@@ -614,7 +612,7 @@ function GameScreen({storedName, onEndGame}) {
         } else if (isQuestionSortable && isSubmitDiabledAfterPressForSortable) {
             feedback.message = 'Incorrect answer. Try again!';
             style = 'error';
-        } else if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected) { // validate name field
+        } else if (!isAnswer1Selected && !isAnswer2Selected && !isAnswer3Selected && !isAnswer4Selected) {
             feedback.message = 'Select an answer to proceed.';
             style = 'info';
         } else if (isSubmitDisabledAfterPressForMultiselect) {
