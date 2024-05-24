@@ -1,6 +1,6 @@
 # Know-It Quizzing App #
 Development of a mobile quizzing application with React Native.  
-The entire development process of this app is documented in the project report.
+The entire development process of this app is documented in the author's project report.  
 
 # How to run and test this app #
 
@@ -8,31 +8,32 @@ The entire development process of this app is documented in the project report.
 Follow these steps: https://reactnative.dev/docs/set-up-your-environment  
 
 ## 2. Android Virtual Device ##
-Download Android Studio.
-Open the Virtual Device Manager.
-Create a new virtual device "Pixel 7" Phone with Android API 34.
-Start the virtual device.
-![open_avd](https://github.com/swbergmann/knowit/assets/52543581/93618e72-d728-43d0-a45e-0fef2b1a3968)
+Download Android Studio.  
+Open the Virtual Device Manager.  
+Create a new virtual device "Pixel 7" Phone with Android API 34.  
+Start the virtual device.  
+![open_avd](https://github.com/swbergmann/knowit/assets/52543581/93618e72-d728-43d0-a45e-0fef2b1a3968)  
 
 ## 3. Clone & start the Know-It App ##
-Clone the knowit repository.
-Open the knowit project in Visual Studio Code editor.
-Click on View/Terminal to display the VS Code terminal.
-Enter: npm start
-This starts the app and creates a QR-code, that can be used on physical devices with the Expo Go app.
-![start_the_app](https://github.com/swbergmann/knowit/assets/52543581/30150a00-5819-4c27-82a5-db628cd95dd5)
+Clone the knowit repository from GitHub.  
+Open the knowit project in Visual Studio Code editor.  
+Click on View/Terminal to display the VS Code terminal.  
+Enter: npm start  
+This starts the app and creates a QR-code, that can be used on physical devices with the Expo Go app.  
+![start_the_app](https://github.com/swbergmann/knowit/assets/52543581/30150a00-5819-4c27-82a5-db628cd95dd5)  
 
 ## 4. Start Know-It app on AVD ##
 In the same Visual Studio Code terminal, enter the letter a  
 to start the Know-It app on the opened AVD.  
-This should automatically download the Expo Go app on the AVD and automatically open the Know-It app.
-In case this does not work, try to re-open the AVD and make sure the Know-It application in the Visual Studio code is started after the AVD is opened. When pressing 'a' in the terminal the AVD must already be opened on the computer.
+This should automatically download the Expo Go app on the AVD and automatically open the Know-It app.  
+In case this does not work, try to re-open the AVD and make sure the Know-It application in the Visual Studio code is started after the AVD is opened. When pressing 'a' in the terminal the AVD must already be opened on the computer.  
 ![app_on_avd](https://github.com/swbergmann/knowit/assets/52543581/4cd9b9f7-d611-4702-bab7-09ac0cfb3981)
 
 ## 5. Optional - Test on a physical Android device ##
-To test the Know-It app on a physical device:
-Install Expo Go (https://expo.dev/go) on a physical device
-Open Expo Go and scan the QR-Code created in step 3. above
+To test the Know-It app on a physical device:  
+Install the Expo Go App (https://expo.dev/go) on a physical device  
+Open Expo Go and scan the QR-Code created from step 3. above  
+![expo_go](https://github.com/swbergmann/knowit/assets/52543581/10e88d67-916b-4702-8346-8ba465f9f6e1)
 
 
 
