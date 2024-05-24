@@ -32,7 +32,15 @@ In case this does not work, try to re-open the AVD and make sure the Know-It app
 ## 5. Optional - Test on a physical Android device ##
 To test the Know-It app on a physical device:  
 Install the Expo Go App (https://expo.dev/go) on a physical device  
-Open Expo Go and scan the QR-Code created from step 3. above  
+Open Expo Go and scan the QR-Code created from step 3. above 
+1. Locate the Expo Go App  
+2. Open Expo Go and click 'Scan QR code'  
+3. Scan the QR code  
+4. Expo Go automatically downloads 
+5. and builds the Know-It app on the physical device
+6. The Know-It app opens automatically
+7. Start using the Know-It app
+8. Initially the Know-It app has no high scores  
 ![expo_go](https://github.com/swbergmann/knowit/assets/52543581/10e88d67-916b-4702-8346-8ba465f9f6e1)
 
 
